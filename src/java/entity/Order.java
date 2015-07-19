@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -28,6 +29,18 @@ public class Order {
   
   @OneToMany(mappedBy = "order")
   private List<OrderItem> orderItemList;
+  
+  @NotEmpty(message = "ФИО - значение должно быть задаено")
+  @Column(name = "fio")
+  private String fio;
+  
+  @NotEmpty(message = "Email - значение должно быть задаено")
+  @Column(name = "email")
+  private String email;
+  
+  @NotEmpty(message = "ФИО - значение должно быть задаено")
+  @Column(name = "address")
+  private String address;
 
   public Long getOrderId() {
     return orderId;
@@ -43,6 +56,22 @@ public class Order {
 
   public void setOrderItemList(List<OrderItem> orderItemList) {
     this.orderItemList = orderItemList;
+  }
+
+  public String getFio() {
+    return fio;
+  }
+
+  public void setFio(String fio) {
+    this.fio = fio;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
   }
   
   
