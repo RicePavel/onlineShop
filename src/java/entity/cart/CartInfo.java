@@ -5,6 +5,8 @@
  */
 package entity.cart;
 
+import java.util.List;
+
 /**
  *
  * @author Rice Pavel
@@ -19,5 +21,7 @@ public class CartInfo {
   public final int count;
   
   public final double summ;
+  
+  public final List<CartInfoItem> items;
   
 }

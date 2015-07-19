@@ -5,8 +5,11 @@
  */
 package controllers;
 
+import entity.cart.CartInfo;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import service.CartService;
 import service.CategoryService;
 
 /**
@@ -18,8 +21,18 @@ public class WebController {
   @Autowired
   private CategoryService categoryService;
   
+  @Autowired
+  private CartService cartService;
+  
+  @ModelAttribute
   public void setMenu(Map<String, Object> model) {
     model.put("categoryList", categoryService.getActive());
+  }
+  
+  @ModelAttribute
+  public void setCartData(Map<String, Object> model) {
+    CartInfo cartInfo = cartService.getCartInfo();
+    model.put("cartInfo", cartInfo);
   }
   
 }

@@ -11,9 +11,9 @@ import entity.Product;
  *
  * @author Rice Pavel
  */
-public class CarInfoItem {
+public class CartInfoItem {
   
-  public CarInfoItem(Product product, int quantity, int summ) {
+  public CartInfoItem(Product product, int quantity, int summ) {
     this.product = product;
     this.quantity = quantity;
     this.summ = summ;
