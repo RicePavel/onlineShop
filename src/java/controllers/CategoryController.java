@@ -22,7 +22,7 @@ import support.StringUtils;
  */
 @Controller
 @RequestMapping("/category")
-public class CategoryController {
+public class CategoryController extends WebController  {
   
   @Autowired
   private CategoryService categoryService;
@@ -36,7 +36,7 @@ public class CategoryController {
       categoryService.add(name, errors);
       model.put("errors", errors);
     }
-    return "product_search";
+    return "category_search";
   }
   
   @RequestMapping("/searchByAdmin")
@@ -44,7 +44,7 @@ public class CategoryController {
           @RequestParam("categoryId") Long categoryId) {
     List<Category> list = categoryService.getActive();
     model.put("list", list);
-    return "product_search";
+    return "category_search";
   }
   
   @RequestMapping("/change")

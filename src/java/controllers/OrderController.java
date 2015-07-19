@@ -19,7 +19,7 @@ import service.OrderService;
  */
 @Controller
 @RequestMapping("/order")
-public class OrderController {
+public class OrderController extends WebController  {
   
   @Autowired
   private OrderService orderService;

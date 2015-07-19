@@ -23,7 +23,7 @@ import support.StringUtils;
  */
 @Controller
 @RequestMapping("/product")
-public class ProductController {
+public class ProductController extends WebController  {
   
   @Autowired
   private ProductService productService;

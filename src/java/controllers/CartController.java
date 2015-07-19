@@ -22,7 +22,7 @@ import service.OrderService;
  */
 @Controller
 @RequestMapping("/cart")
-public class CartController {
+public class CartController extends WebController {
   
   @Autowired
   private CartService cartService;

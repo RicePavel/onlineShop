@@ -1,4 +1,27 @@
 
+.top-menu {
+  height:100px; 
+  width:100%;
+}
+
+.container {
+  width:1200px;
+  margin:0 auto;
+}
+
+.menu {
+  float:left;
+  width:500px; 
+  min-height:500px;
+}
+
+.content {
+  margin-left: 500px; 
+  min-height:500px;
+}
+
+// ------
+
 .standart-form {
   width: 500px;
   margin: 50px;
