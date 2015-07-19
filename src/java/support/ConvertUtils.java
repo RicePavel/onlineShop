@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
-
-import dao.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+package support;
 
 /**
  *
  * @author Rice Pavel
  */
-@Service
-public class UserService {
+public class ConvertUtils {
   
-  @Autowired
-  private UserDao userDao;
+  public static Double getDouble(String str) {
+    try {
+      return Double.parseDouble(str);
+    } catch (Exception e) {
+      return null;
+    }
+  }
   
 }

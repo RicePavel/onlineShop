@@ -6,11 +6,13 @@
 package dao;
 
 import entity.Category;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Rice Pavel
  */
+@Repository
 public class CategoryDao extends Dao<Category> {
 
   @Override

@@ -5,10 +5,13 @@
  */
 package service;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author Rice Pavel
  */
+@Service
 public class CartService {
   
   

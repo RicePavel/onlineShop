@@ -18,12 +18,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class EntityValidator {
   
-   public <T> void validate(List<String> errors, T ent) {
+   public <T> boolean validate(List<String> errors, T ent) {
         javax.validation.Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(ent);
         for (ConstraintViolation<T> viol : constraintViolations) {
             errors.add(viol.getMessage());
         }
+        return (errors.isEmpty());
     }
   
 }

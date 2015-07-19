@@ -6,11 +6,13 @@
 package dao;
 
 import entity.User;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Новый профиль
  */
+@Repository
 public class UserDao extends Dao<User> {
   
   @Override
