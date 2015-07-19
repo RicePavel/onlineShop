@@ -36,7 +36,7 @@ public class CategoryController extends WebController  {
       categoryService.add(name, errors);
       model.put("errors", errors);
     }
-    return "category_search";
+    return "redirect:/category/searchByAdmin";
   }
   
   @RequestMapping("/searchByAdmin")

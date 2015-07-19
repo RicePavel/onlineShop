@@ -24,6 +24,7 @@ public class OrderController extends WebController  {
   @Autowired
   private OrderService orderService;
   
+  @RequestMapping("/search")
   public String search(Map<String, Object> model) {
     List<Order> list = orderService.search();
     model.put("list", list);

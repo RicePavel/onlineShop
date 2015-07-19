@@ -9,7 +9,12 @@
 <%@include file="/WEB-INF/jsp/tags.jsp" %>
 
 
+<security:authorize url="/category/search" >
+    <a href="<c:url value="/category/search" />">Редактировать категории</a> <br/>
+  </security:authorize>
 
 <c:forEach items="${categoryList}" var="category" >
-  <a href="<c:url value="/product/search?categoryId=${category.categoryId}" />">${category.name}</a> <br/>
+  <security:authorize url="/product/search" >
+    <a href="<c:url value="/product/search?categoryId=${category.categoryId}" />">${category.name}</a> <br/>
+  </security:authorize>
 </c:forEach>

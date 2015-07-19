@@ -5,6 +5,7 @@
  */
 package service;
 
+import entity.cart.CartInfo;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,13 @@ import org.springframework.stereotype.Service;
 public class CartService {
   
   private final String CART_ATTRIBUTE = "Cart";
+  
+  /*
+  public CartInfo getCartInfo(HttpSession session) {
+    Map<Long, Integer> cart = getCart(session);
+    
+  }
+  */
   
   public void add(Long productId, HttpSession session) {
     Map<Long, Integer> cart = getCart(session);
