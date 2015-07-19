@@ -30,7 +30,7 @@ public class ProductController {
   
   @RequestMapping("/search")
   public String search(Map<String, Object> model, @RequestParam("categoryId") Long categoryId) {
-    List<Product> list = productService.searchByCategory(categoryId);
+    List<Product> list = productService.searchActiveByCategory(categoryId);
     model.put("list", list);
     return "product_search";
   }
@@ -67,6 +67,14 @@ public class ProductController {
       }
     }
     return "product_change";
+  }
+  
+  @RequestMapping("/delete")
+  public String delete(Map<String, Object> model, 
+          @RequestParam("productId") Long productId,
+          @RequestParam(value = "categoryId", required = false) Long categoryId) {
+    productService.close(productId);
+    return "redirect:/search?categoryId" + categoryId;
   }
   
 }

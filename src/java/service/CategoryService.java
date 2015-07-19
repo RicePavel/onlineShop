@@ -7,6 +7,8 @@ package service;
 
 import dao.CategoryDao;
 import entity.Category;
+import entity.Product;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,21 +20,27 @@ import support.EntityValidator;
  */
 @Service
 public class CategoryService {
-  
+
   @Autowired
   private CategoryDao categoryDao;
+
+  private ProductService productService;
   
   @Autowired
   private EntityValidator validator;
-  
+
   public List<Category> getAll() {
     return categoryDao.getAll();
   }
-  
+
+  public List<Category> getActive() {
+    return categoryDao.getActive();
+  }
+
   public Category find(Long categoryId) {
     return categoryDao.find(categoryId);
   }
-  
+
   public void add(String name, List<String> errors) {
     Category category = new Category();
     category.setName(name);
@@ -41,7 +49,7 @@ public class CategoryService {
       categoryDao.save(category);
     }
   }
-  
+
   public void change(Long categoryId, String name, List<String> errors) {
     Category cat = categoryDao.find(categoryId);
     cat.setName(name);
@@ -50,5 +58,20 @@ public class CategoryService {
       categoryDao.update(cat);
     }
   }
-  
+
+  public void close(Long categoryId) {
+    Category cat = categoryDao.find(categoryId);
+    cat.setCloseDate(new Date());
+    categoryDao.update(cat);
+    closeProducts(cat);
+  }
+
+  private void closeProducts(Category cat) {
+    if (cat.getProductList() != null) {
+      for (Product product : cat.getProductList()) {
+        productService.close(product.getProductId());
+      }
+    }
+  }
+
 }

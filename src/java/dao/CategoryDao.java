@@ -6,6 +6,9 @@
 package dao;
 
 import entity.Category;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,6 +21,13 @@ public class CategoryDao extends Dao<Category> {
   @Override
   public Class getSupportedClass() {
     return Category.class;
+  }
+  
+  public List<Category> getActive() {
+    Criteria crit = currentSession().createCriteria(getSupportedClass());
+    crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+    crit.add(Restrictions.isNull("closeDate"));
+    return crit.list();
   }
   
 }

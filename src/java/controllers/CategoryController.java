@@ -42,7 +42,7 @@ public class CategoryController {
   @RequestMapping("/searchByAdmin")
   public String search(Map<String, Object> model, 
           @RequestParam("categoryId") Long categoryId) {
-    List<Category> list = categoryService.getAll();
+    List<Category> list = categoryService.getActive();
     model.put("list", list);
     return "product_search";
   }
@@ -63,6 +63,11 @@ public class CategoryController {
       }
     }
     return "category_change";
+  }
+  
+  public String delete(Map<String, Object> model, @RequestParam("categoryId") Long categoryId) {
+    categoryService.close(categoryId);
+    return "redirect:/searchByAdmin";
   }
   
 }

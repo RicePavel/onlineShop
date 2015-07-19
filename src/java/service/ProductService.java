@@ -7,6 +7,7 @@ package service;
 
 import dao.ProductDao;
 import entity.Product;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,16 @@ public class ProductService {
   
   public List<Product> searchByCategory(Long categoryId) {
     return productDao.searchByCategory(categoryId);
+  }
+  
+  public List<Product> searchActiveByCategory(Long categoryId) {
+    return productDao.searchActiveByCategory(categoryId);
+  }
+  
+  public void close(Long productId) {
+    Product prod = productDao.find(productId);
+    prod.setCloseDate(new Date());
+    productDao.update(prod);
   }
   
   public Product find(Long productId) {

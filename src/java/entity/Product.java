@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -43,6 +46,10 @@ public class Product {
   @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;
+  
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "close_date")
+  private Date closeDate;
 
   public Long getProductId() {
     return productId;
@@ -82,6 +89,14 @@ public class Product {
 
   public void setCategory(Category category) {
     this.category = category;
+  }
+
+  public Date getCloseDate() {
+    return closeDate;
+  }
+
+  public void setCloseDate(Date closeDate) {
+    this.closeDate = closeDate;
   }
  
   
