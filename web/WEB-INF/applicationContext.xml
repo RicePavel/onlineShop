@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+  
+  <bean id="dataSource"
+         class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+         p:driverClassName="org.hsqldb.jdbcDriver"
+         p:url="jdbc:hsqldb:file:onlineShop"
+         p:username="SA"
+         p:password=""
+  />
+  
+  <!--
+<bean id="dataSource"
+     class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+     p:driverClassName="org.apache.derby.jdbc.ClientDriver"
+     p:url="jdbc:derby://localhost:1527/dvd2"
+     p:username="dvd"
+     p:password="qwerty"
+  />
+  -->
+        
+  <!-- Настраивает управление транзакциями с помощью аннотации @Transactional -->
+  <tx:annotation-driven transaction-manager="transactionManager" /> 
+    
+  
+  <!-- Менеджер транзакций -->
+  <bean id="transactionManager"
+        class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  
+  
+  
+  <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+    <property name="transactionManager" ref="transactionManager" />
+  </bean>
+    
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+    <property name="dataSource" ref="dataSource" />
+    <property name="packagesToScan" value="entity" />
+    <property name="hibernateProperties">
+      <props>
+        <prop key="dialect">org.hibernate.dialect.HSQLDialect</prop> 
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
+        <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+      </props>
+    </property>
+  </bean>
+    
+  <!--
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+    <property name="dataSource" ref="dataSource" />
+    <property name="packagesToScan" value="entity" />
+    <property name="hibernateProperties">
+      <props>
+        <prop key="dialect">org.Hibernate.dialect.DerbyDialect</prop> 
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
+        <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+      </props>
+    </property>
+  </bean>
+  -->
+  
+  <import resource="security.xml" />
+
+  <context:annotation-config />
+  
+  <context:component-scan base-package="controllers"/>
+  <context:component-scan base-package="dao"/>
+  <context:component-scan base-package="entity"/>
+  <context:component-scan base-package="service"/>
+  <context:component-scan base-package="support" />
+  <context:component-scan base-package="startup" />
+  
+</beans>
