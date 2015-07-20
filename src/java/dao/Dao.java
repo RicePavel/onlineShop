@@ -86,6 +86,10 @@ public abstract class Dao<T> {
       return null;
     }
   }
+  
+  public void evict(T obj) {
+    currentSession().evict(obj);
+  }
 
   protected Criteria getCriteriaDistinctRootEntity(Class cl) {
     Criteria crit = currentSession().createCriteria(cl);

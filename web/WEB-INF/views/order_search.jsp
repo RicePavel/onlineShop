@@ -6,8 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@include file="/WEB-INF/jsp/tags.jsp" %>
 <%@include file="/WEB-INF/jsp/head.jsp" %>
+
+<%@include file="/WEB-INF/jsp/errors.jsp" %>
+
 
 <c:forEach items="${list}" var="order" > 
   <div> ${order.fio} ${order.email} ${order.address} </div>

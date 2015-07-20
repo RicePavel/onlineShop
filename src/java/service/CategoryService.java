@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import support.EntityValidator;
 
 /**
@@ -19,6 +20,7 @@ import support.EntityValidator;
  * @author Rice Pavel
  */
 @Service
+@Transactional
 public class CategoryService {
 
   @Autowired
@@ -56,6 +58,8 @@ public class CategoryService {
     validator.validate(errors, cat);
     if (errors.isEmpty()) {
       categoryDao.update(cat);
+    } else {
+      categoryDao.evict(cat);
     }
   }
 

@@ -24,5 +24,19 @@ public class CartInfoItem {
   public final int quantity;
   
   public final double summ;
+
+  public Product getProduct() {
+    return product;
+  }
+
+  public int getQuantity() {
+    return quantity;
+  }
+
+  public double getSumm() {
+    return summ;
+  }
+  
+  
   
 }

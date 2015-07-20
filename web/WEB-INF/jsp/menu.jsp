@@ -12,6 +12,9 @@
 <security:authorize url="/category/search" >
     <a href="<c:url value="/category/search" />">Редактировать категории</a> <br/>
   </security:authorize>
+    <security:authorize url="/order/search" >
+    <a href="<c:url value="/order/search" />">Смотреть заказы</a> <br/>
+  </security:authorize>
 
 <c:forEach items="${categoryList}" var="category" >
   <security:authorize url="/product/search" >

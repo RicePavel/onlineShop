@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Rice Pavel
  */
 @Entity
-@Table(name = "product")
+@Table(name = "category")
 public class Category {
 
   @Id
@@ -30,7 +30,7 @@ public class Category {
   @Column(name = "category_id")
   private Long categoryId;
 
-  @NotEmpty(message = "обязательный параметр - название")
+  @NotEmpty(message = "не передан параметр - название")
   @Column(name = "name")
   private String name;
 

@@ -16,12 +16,14 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Rice Pavel
  */
 @Service
+@Transactional
 public class CartService {
   
   private final String CART_ATTRIBUTE = "Cart";

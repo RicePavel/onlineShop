@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Rice Pavel
  */
 @Entity
-@Table(name = "order_item")
+@Table(name = "orders")
 public class Order {
   
   @Id
@@ -30,15 +30,15 @@ public class Order {
   @OneToMany(mappedBy = "order")
   private List<OrderItem> orderItemList;
   
-  @NotEmpty(message = "ФИО - значение должно быть задаено")
+  @NotEmpty(message = "ФИО - значение должно быть задано")
   @Column(name = "fio")
   private String fio;
   
-  @NotEmpty(message = "Email - значение должно быть задаено")
+  @NotEmpty(message = "Email - значение должно быть задано")
   @Column(name = "email")
   private String email;
   
-  @NotEmpty(message = "ФИО - значение должно быть задаено")
+  @NotEmpty(message = "ФИО - значение должно быть задано")
   @Column(name = "address")
   private String address;
 

@@ -21,10 +21,12 @@ public class EntityValidator {
    public <T> boolean validate(List<String> errors, T ent) {
         javax.validation.Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(ent);
+        boolean ok = true;
         for (ConstraintViolation<T> viol : constraintViolations) {
             errors.add(viol.getMessage());
+            ok = false;
         }
-        return (errors.isEmpty());
+        return ok;
     }
   
 }

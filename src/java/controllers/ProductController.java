@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import service.CategoryService;
 import service.ProductService;
 import support.StringUtils;
 
@@ -28,25 +30,37 @@ public class ProductController extends WebController  {
   @Autowired
   private ProductService productService;
   
+  @Autowired
+  private CategoryService categoryService;
+  
+  @RequestMapping("/home")
+  public String home(Map<String, Object> model) {
+    return "welcome";
+  }
+  
   @RequestMapping("/search")
   public String search(Map<String, Object> model, @RequestParam("categoryId") Long categoryId) {
+    Category category = categoryService.find(categoryId);
+    model.put("category", category);
     List<Product> list = productService.searchActiveByCategory(categoryId);
     model.put("list", list);
     return "product_search";
   }
   
-    @RequestMapping("/add")
+  @RequestMapping("/add")
   public String add(Map<String, Object> model,
           @RequestParam(value = "name", required = false) String name,
           @RequestParam(value = "description", required = false) String description,
           @RequestParam(value = "price", required = false) String price,
-          @RequestParam(value = "submit", required = false) String submit) {
+          @RequestParam("categoryId") Long categoryId,
+          @RequestParam(value = "submit", required = false) String submit,
+          RedirectAttributes ra) {
     if (StringUtils.notEmpty(submit)) {
       List<String> errors = new ArrayList();
-      productService.add(name, description, price, errors);
-      model.put("errors", errors);
+      productService.add(name, description, price, categoryId, errors);
+      ra.addFlashAttribute("errors", errors);
     }
-    return "product_search";
+    return "redirect:/product/search?categoryId=" + categoryId;
   }
   
   @RequestMapping("/change")
@@ -55,7 +69,8 @@ public class ProductController extends WebController  {
           @RequestParam(value = "name", required = false) String name,
           @RequestParam(value = "description", required = false) String description,
           @RequestParam(value = "price", required = false) String price,
-          @RequestParam(value = "submit", required = false) String submit) {
+          @RequestParam(value = "submit", required = false) String submit,
+          @RequestParam(value = "categoryId", required = false) Long categoryId) {
     Product product = productService.find(productId);
     model.put("product", product);
     if (StringUtils.notEmpty(submit)) {
@@ -63,7 +78,7 @@ public class ProductController extends WebController  {
       productService.change(productId, name, description, price, errors);
       model.put("errors", errors);
       if (errors.isEmpty()) {
-        return "rediret:/search";
+        return "redirect:/product/search?categoryId=" + categoryId;
       }
     }
     return "product_change";
@@ -74,7 +89,7 @@ public class ProductController extends WebController  {
           @RequestParam("productId") Long productId,
           @RequestParam(value = "categoryId", required = false) Long categoryId) {
     productService.close(productId);
-    return "redirect:/search?categoryId" + categoryId;
+    return "redirect:/product/search?categoryId=" + categoryId;
   }
   
 }

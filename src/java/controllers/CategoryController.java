@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.CategoryService;
 import support.StringUtils;
 
@@ -29,19 +30,20 @@ public class CategoryController extends WebController  {
   
   @RequestMapping("/add")
   public String add(Map<String, Object> model,
-          @RequestParam("name") String name,
-          @RequestParam("submit") String submit) {
+          @RequestParam(value = "name", required = false) String name,
+          @RequestParam(value = "submit", required = false) String submit,
+          RedirectAttributes ra) {
     if (StringUtils.notEmpty(submit)) {
       List<String> errors = new ArrayList();
       categoryService.add(name, errors);
-      model.put("errors", errors);
+      //model.put("errors", errors);
+      ra.addFlashAttribute("errors", errors);
     }
-    return "redirect:/category/searchByAdmin";
+    return "redirect:/category/search";
   }
   
-  @RequestMapping("/searchByAdmin")
-  public String search(Map<String, Object> model, 
-          @RequestParam("categoryId") Long categoryId) {
+  @RequestMapping("/search")
+  public String search(Map<String, Object> model) {
     List<Category> list = categoryService.getActive();
     model.put("list", list);
     return "category_search";
@@ -50,8 +52,8 @@ public class CategoryController extends WebController  {
   @RequestMapping("/change")
   public String change(Map<String, Object> model,
           @RequestParam("categoryId") Long categoryId,
-          @RequestParam("name") String name,
-          @RequestParam("submit") String submit) {
+          @RequestParam(value = "name", required = false) String name,
+          @RequestParam(value = "submit", required = false) String submit) {
     Category category = categoryService.find(categoryId);
     model.put("category", category);
     if (StringUtils.notEmpty(submit)) {
@@ -59,15 +61,16 @@ public class CategoryController extends WebController  {
       categoryService.change(categoryId, name, errors);
       model.put("errors", errors);
       if (errors.isEmpty()) {
-        return "rediret:/searchByAdmin";
+        return "redirect:/category/search";
       }
     }
     return "category_change";
   }
   
+  @RequestMapping("/delete")
   public String delete(Map<String, Object> model, @RequestParam("categoryId") Long categoryId) {
     categoryService.close(categoryId);
-    return "redirect:/searchByAdmin";
+    return "redirect:/category/search";
   }
   
 }

@@ -31,18 +31,18 @@ public class Product {
   @Column(name = "product_id")
   private Long productId;
   
-  @NotEmpty(message = "обязательный параметр - название")
+  @NotEmpty(message = "не передан параметр - название")
   @Column(name = "name")
   private String name;
   
   @Column(name = "description")
   private String description;
   
-  @NotNull(message = "Обязательный параметр - цена")
+  @NotNull(message = "не передан параметр - цена")
   @Column(name = "price")
   private Double price;
   
-  @NotNull(message = "Обязательный параметр - категория")
+  @NotNull(message = "не передан параметр - категория")
   @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;

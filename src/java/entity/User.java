@@ -25,11 +25,11 @@ public class User {
   @Column(name = "user_id")
   private Long userId;
   
-  @NotEmpty(message = "обязательный параметр - логин")
+  @NotEmpty(message = "не передан параметр - логин")
   @Column(name = "login")
   private String login;
   
-  @NotEmpty(message = "обязательный параметр - логин")
+  @NotEmpty(message = "не передан параметр - логин")
   @Column(name = "password")
   private String password;
 

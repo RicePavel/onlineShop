@@ -24,7 +24,19 @@ public class CartInfo {
     this.summ = summ;
     this.items = items;
   }
-  
 
+  public int getCount() {
+    return count;
+  }
+
+  public double getSumm() {
+    return summ;
+  }
+
+  public List<CartInfoItem> getItems() {
+    return items;
+  }
+  
+  
   
 }

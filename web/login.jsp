@@ -22,6 +22,4 @@
 
     </form>
 
-    <a style="margin:50px;" class="btn btn-primary" role="button" href="<c:url value="/User/registration" />">Регистрация</a>
-
   <%@include file="/WEB-INF/jsp/bottom.jsp" %>

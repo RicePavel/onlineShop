@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entity.cart.CartInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.CartService;
 import service.OrderService;
 
@@ -33,7 +35,7 @@ public class CartController extends WebController {
   @RequestMapping("/addProduct")
   public String addProduct(Map<String, Object> model, 
           @RequestParam("productId") Long productId, 
-          @RequestParam("categoryId") Long categoryId,
+          @RequestParam(value = "categoryId", required = false) Long categoryId,
           HttpSession session) {
     cartService.add(productId, session);
     return "redirect:/product/search?categoryId=" + categoryId;
@@ -54,28 +56,33 @@ public class CartController extends WebController {
   }
   
   @RequestMapping("/minus")
-  public String minus(Long productId, HttpSession session) {
+  public String minus(Map<String, Object> model, 
+          @RequestParam("productId") Long productId, HttpSession session) {
     cartService.minus(productId, session);
     return "redirect:/cart/show";
   }
   
   @RequestMapping("/show")
   public String show(Map<String, Object> model, HttpSession session) {
-    Map<Long, Integer> cart = cartService.getCurrentCart(session);
-    model.put("cart", cart);
+    CartInfo cartInfo = cartService.getCartInfo(session);
+    model.put("cartInfo", cartInfo);
+    boolean notEmpty = !cartInfo.getItems().isEmpty();
+    model.put("notEmpty", notEmpty);
     return "cart_show";
   }
   
   @RequestMapping("/makeOrder")
   public String makeOrder(Map<String, Object> model, HttpSession session,
           @RequestParam(value = "fio", required = false) String fio,
-          @RequestParam(value = "fio", required = false) String address) {
+          @RequestParam(value = "address", required = false) String address,
+          @RequestParam(value = "email", required = false) String email,
+          RedirectAttributes ra) {
     List<String> errors = new ArrayList();
-    orderService.makeOrder(fio, address, errors, session);
-    if (!errors.isEmpty()) {
+    orderService.makeOrder(fio, address, email, errors, session);
+    if (errors.isEmpty()) {
       return "order_success";
     } else {
-      model.put("errors", errors);
+      ra.addFlashAttribute("errors", errors);
       return "redirect:/cart/show";
     }
   }

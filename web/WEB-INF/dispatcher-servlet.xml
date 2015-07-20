@@ -19,6 +19,7 @@
   
   <mvc:resources mapping="/bootstrap/**"  location="/bootstrap/"/>
   <mvc:resources mapping="/css/**" location="/css/" />
+  <mvc:resources mapping="/login.jsp" location="/" />
   
   <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
@@ -45,9 +46,10 @@
   <!--
   The index controller.
   -->
+  <!--
   <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="index" />
+          p:viewName="index" /> -->
 
   <context:component-scan base-package="controllers"/>
   

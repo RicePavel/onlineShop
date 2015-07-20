@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@include file="/WEB-INF/jsp/tags.jsp" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,10 +11,16 @@
     <script src="bootstrap/js/bootstrap.min.js" ></script>
   </head>
   <body>
-    
+
     <div class="container">
       <div class="top-menu"> <%@include file="/WEB-INF/jsp/cart.jsp" %>
-        <a href="<c:url value="/login.jsp" />"> </a></div>
+        <security:authorize ifAnyGranted="ANONYM" >
+          <a href="<c:url value="/login.jsp" />">Вход</a>
+        </security:authorize>
+        <security:authorize ifNotGranted="ANONYM" >
+          <a href="<c:url value="/logout" />">Выход</a>
+        </security:authorize>
+      </div>
       <div class="menu"> <%@include file="/WEB-INF/jsp/menu.jsp" %> </div>
       <div class="content"> 
-    
+
