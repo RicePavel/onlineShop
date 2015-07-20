@@ -82,6 +82,22 @@ public class Order {
     this.email = email;
   }
   
+  public double getTotalSummPrice() {
+    List<OrderItem> list = getOrderItemList();
+    double price = 0;
+    for (OrderItem item: list) {
+      price += item.getSummPrice();
+    }
+    return 0;
+  }
   
+  public double getTotalQuantity() {
+    List<OrderItem> list = getOrderItemList();
+    double quantity = 0;
+    for (OrderItem item: list) {
+      quantity += item.getQuantity();
+    }
+    return 0;
+  }
   
 }

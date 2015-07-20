@@ -80,6 +80,8 @@ public class OrderItem {
     this.order = order;
   }
   
-  
+  public double getSummPrice() {
+    return price*quantity;
+  }
   
 }
