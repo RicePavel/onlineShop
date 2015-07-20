@@ -15,7 +15,7 @@
     <intercept-url pattern="/product/change" access="hasRole('ADMIN')" />
     <intercept-url pattern="/product/delete" access="hasRole('ADMIN')" />
     
-    <intercept-url pattern="/product/addProduct" access="isAnonymous()" />
+    <intercept-url pattern="/cart/addProduct" access="isAnonymous()" />
     <intercept-url pattern="/cart/show" access="isAnonymous()" />
     
     <intercept-url pattern="/login.jsp" access="hasAnyRole('USER', 'ANONYM')" />

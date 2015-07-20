@@ -54,12 +54,13 @@
 
 .order-item {
   overflow: hidden;
+  overflow: hidden;
   padding: 10px;
 }
 
 .order-left-part {
   float: left;
-  width: 500px;
+  width: 650px;
   padding: 10px;
 }
 
@@ -69,7 +70,7 @@
 
 .order-right-part {
     padding: 10px;
-    margin-left: 500px;
+    margin-left: 650px;
 }
 
 .order-price {

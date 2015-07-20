@@ -13,6 +13,7 @@ public class ConvertUtils {
   
   public static Double getDouble(String str) {
     try {
+      str = str.replaceAll(" ", "");
       return Double.parseDouble(str);
     } catch (Exception e) {
       return null;

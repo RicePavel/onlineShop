@@ -26,6 +26,7 @@ public class CategoryService {
   @Autowired
   private CategoryDao categoryDao;
 
+  @Autowired
   private ProductService productService;
   
   @Autowired
