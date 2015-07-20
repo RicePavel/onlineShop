@@ -26,11 +26,11 @@ public class User {
   private Long userId;
   
   @NotEmpty(message = "обязательный параметр - логин")
-  @Column(name = "name")
+  @Column(name = "login")
   private String login;
   
   @NotEmpty(message = "обязательный параметр - логин")
-  @Column(name = "name")
+  @Column(name = "password")
   private String password;
 
   public Long getUserId() {

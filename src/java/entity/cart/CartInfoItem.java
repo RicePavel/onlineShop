@@ -13,7 +13,7 @@ import entity.Product;
  */
 public class CartInfoItem {
   
-  public CartInfoItem(Product product, int quantity, int summ) {
+  public CartInfoItem(Product product, int quantity, double summ) {
     this.product = product;
     this.quantity = quantity;
     this.summ = summ;
@@ -23,6 +23,6 @@ public class CartInfoItem {
   
   public final int quantity;
   
-  public final int summ;
+  public final double summ;
   
 }

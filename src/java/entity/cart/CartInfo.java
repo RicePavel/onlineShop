@@ -13,15 +13,18 @@ import java.util.List;
  */
 public class CartInfo {
   
-  public CartInfo(int count, double summ) {
-    this.count = count;
-    this.summ = summ;
-  }
-  
-  public final int count;
+    public final int count;
   
   public final double summ;
   
   public final List<CartInfoItem> items;
+  
+  public CartInfo(int count, double summ, List<CartInfoItem> items) {
+    this.count = count;
+    this.summ = summ;
+    this.items = items;
+  }
+  
+
   
 }

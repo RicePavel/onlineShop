@@ -5,10 +5,16 @@
  */
 package service;
 
+import dao.ProductDao;
+import entity.Product;
 import entity.cart.CartInfo;
+import entity.cart.CartInfoItem;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,12 +26,24 @@ public class CartService {
   
   private final String CART_ATTRIBUTE = "Cart";
   
-  /*
+  @Autowired
+  private ProductDao productDao;
+  
   public CartInfo getCartInfo(HttpSession session) {
     Map<Long, Integer> cart = getCart(session);
-    
+    List<CartInfoItem> infoList = new ArrayList();
+    int totalQuantity = 0;
+    double totalSumm = 0;
+    for (Long productId: cart.keySet()) {
+      Integer quantity = cart.get(productId);
+      Product prod = productDao.find(productId);
+      double summ = prod.getPrice() * ((double) quantity);
+      infoList.add(new CartInfoItem(prod, quantity, summ));
+      totalQuantity += quantity;
+      totalSumm += summ;
+    }
+    return new CartInfo(totalQuantity, totalSumm, infoList);
   }
-  */
   
   public void add(Long productId, HttpSession session) {
     Map<Long, Integer> cart = getCart(session);

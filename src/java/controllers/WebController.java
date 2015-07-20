@@ -7,6 +7,7 @@ package controllers;
 
 import entity.cart.CartInfo;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import service.CartService;
@@ -30,8 +31,8 @@ public class WebController {
   }
   
   @ModelAttribute
-  public void setCartData(Map<String, Object> model) {
-    CartInfo cartInfo = cartService.getCartInfo();
+  public void setCartData(Map<String, Object> model, HttpSession session) {
+    CartInfo cartInfo = cartService.getCartInfo(session);
     model.put("cartInfo", cartInfo);
   }
   

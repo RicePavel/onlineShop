@@ -13,7 +13,8 @@
   <body>
     
     <div class="container">
-      <div class="top-menu"> </div>
+      <div class="top-menu"> <%@include file="/WEB-INF/jsp/cart.jsp" %>
+        <a href="<c:url value="/login.jsp" />"> </a></div>
       <div class="menu"> <%@include file="/WEB-INF/jsp/menu.jsp" %> </div>
       <div class="content"> 
     

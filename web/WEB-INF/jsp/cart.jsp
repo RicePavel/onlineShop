@@ -11,6 +11,7 @@
 
 <div> 
   Моя корзина: <br/>
-  Товаров: <br/>
-  Сумма: 
+  Товаров: ${cartInfo.count} <br/>
+  Сумма: ${catyInfo.summ} <br/>
+  <a href="<c:url value="/cart/show" />">Оформить заказ</a>
 </div>
