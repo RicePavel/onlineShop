@@ -7,6 +7,7 @@ package controllers;
 
 import entity.cart.CartInfo;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.CartService;
 import service.OrderService;
@@ -41,6 +43,16 @@ public class CartController extends WebController {
     return "redirect:/product/search?categoryId=" + categoryId;
   }
   
+  @ResponseBody
+  @RequestMapping(value = "addProduct", params = "ajax")
+  public Map<String, Object> addProduct(Map<String, Object> model, 
+          @RequestParam("productId") Long productId, HttpSession session) {
+    cartService.add(productId, session);
+    Map<String, Object> result = new HashMap();
+    result.put("status", "true");
+    return result;
+  }
+  
   @RequestMapping("/delete")
   public String delete(Map<String, Object> model, 
           @RequestParam("productId") Long productId, HttpSession session) {
@@ -60,6 +72,11 @@ public class CartController extends WebController {
           @RequestParam("productId") Long productId, HttpSession session) {
     cartService.minus(productId, session);
     return "redirect:/cart/show";
+  }
+  
+  @RequestMapping(value = "/show", params = "ajax")
+  public CartInfo getCurrent(HttpSession session) {
+    return cartService.getCartInfo(session);
   }
   
   @RequestMapping("/show")
