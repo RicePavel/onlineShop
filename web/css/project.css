@@ -11,13 +11,23 @@
 
 .menu {
   float:left;
-  width:500px; 
+  width:250px; 
   min-height:500px;
 }
 
 .content {
-  margin-left: 500px; 
+  margin-left: 250px; 
   min-height:500px;
+  padding: 20px;
+}
+
+.login-form {
+  width: 300px;
+  margin: 100px auto;
+}
+
+.login-form input {
+  margin: 20px 0;
 }
 
 // ------
@@ -39,3 +49,33 @@
   margin: 50px;
   padding: 10px;
 }
+
+// заказы
+
+.order-item {
+  overflow: hidden;
+  padding: 10px;
+}
+
+.order-left-part {
+  float: left;
+  width: 500px;
+  padding: 10px;
+}
+
+.order-title {
+    font-size: 20px;
+}
+
+.order-right-part {
+    padding: 10px;
+    margin-left: 500px;
+}
+
+.order-price {
+    font-size: 30px;
+    color: green;
+    font-style: italic;
+}
+
+

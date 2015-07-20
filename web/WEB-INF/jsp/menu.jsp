@@ -8,16 +8,21 @@
 
 <%@include file="/WEB-INF/jsp/tags.jsp" %>
 
+<div class="menu list-group">
 
-<security:authorize url="/category/search" >
-    <a href="<c:url value="/category/search" />">Редактировать категории</a> <br/>
+  <security:authorize url="/category/search" >
+    <a class="list-group-item" href="<c:url value="/category/search" />">Редактировать категории</a>
   </security:authorize>
-    <security:authorize url="/order/search" >
-    <a href="<c:url value="/order/search" />">Смотреть заказы</a> <br/>
+  <security:authorize url="/order/search" >
+    <a class="list-group-item" href="<c:url value="/order/search" />">Смотреть заказы</a>
   </security:authorize>
 
-<c:forEach items="${categoryList}" var="category" >
-  <security:authorize url="/product/search" >
-    <a href="<c:url value="/product/search?categoryId=${category.categoryId}" />">${category.name}</a> <br/>
-  </security:authorize>
-</c:forEach>
+  <span class="list-group-item active">Товары по категориям </span>
+
+  <c:forEach items="${categoryList}" var="category" >
+    <security:authorize url="/product/search" >
+      <a class="list-group-item" href="<c:url value="/product/search?categoryId=${category.categoryId}" />">${category.name}</a>
+    </security:authorize>
+  </c:forEach>
+
+</div>

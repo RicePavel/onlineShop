@@ -12,13 +12,36 @@
 
 
 <security:authorize url="/product/change" >
-  <form action="<c:url value="/product/change" />" >
-    Название: <input type="text" name="name" value="${product.name}" /> <br/>
-    Описание: <textarea name="description">${product.description}</textarea> <br/>
-    Цена: <input type="text" name="price" value="${product.price}" /> <br/>
+  <form class="form-horizontal" role="form" action="<c:url value="/product/change" />" >
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Название:</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="name" value="${product.name}" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Описание:</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" name="description">${product.description}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Цена:</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="price" value="${product.price}" />
+      </div>
+    </div>
+
     <input type="hidden" name="productId" value="${product.productId}" />
     <input type="hidden" name="categoryId" value="${param['categoryId']}" />
-    <input type="submit" name="submit" value="Сохранить" />
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input class="btn btn-default" type="submit" name="submit" value="Сохранить" />
+      </div>
+    </div>
   </form>
 </security:authorize>
 

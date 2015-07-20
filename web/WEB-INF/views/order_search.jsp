@@ -12,8 +12,8 @@
 
 
 <c:forEach items="${list}" var="order" > 
-  <div> ${order.fio} ${order.email} ${order.address} </div>
-  <table>
+  <h3> ${order.fio} ${order.email} ${order.address} </h3>
+  <table class="table table-bordered" >
     <tr>
       <td>Название</td>
       <td>Цена</td>

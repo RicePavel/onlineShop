@@ -12,13 +12,24 @@
 
 
 <security:authorize url="/category/add" >
-  <form action="<c:url value="/category/add" />"> 
-    <input type="text" name="name" />
-    <input type="submit" name="submit" value="Добавить" />
+  <form class="form-horizontal" action="<c:url value="/category/add" />"> 
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Название:</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="name" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input class="btn btn-default" type="submit" name="submit" value="Добавить" />
+      </div>
+    </div>
   </form>
 </security:authorize>
 
-<table>
+<table class="table table-bordered" >
   <c:forEach items="${list}" var="category"> 
     <tr>
       <td>${category.name}</td>

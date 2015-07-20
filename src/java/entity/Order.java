@@ -88,7 +88,7 @@ public class Order {
     for (OrderItem item: list) {
       price += item.getSummPrice();
     }
-    return 0;
+    return price;
   }
   
   public double getTotalQuantity() {
@@ -97,7 +97,7 @@ public class Order {
     for (OrderItem item: list) {
       quantity += item.getQuantity();
     }
-    return 0;
+    return quantity;
   }
   
 }

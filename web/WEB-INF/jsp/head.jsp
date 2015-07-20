@@ -5,22 +5,36 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JSP Page</title>
-    <link rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.min.css' />" />
-    <link rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap-theme.css' />" />
-    <link rel="stylesheet" href="<c:url value='/css/project.css' />" />
-    <script src="bootstrap/js/bootstrap.min.js" ></script>
+    <%@include file="/WEB-INF/jsp/js_css.jsp" %>
   </head>
   <body>
 
-    <div class="container">
-      <div class="top-menu"> <%@include file="/WEB-INF/jsp/cart.jsp" %>
-        <security:authorize ifAnyGranted="ANONYM" >
-          <a href="<c:url value="/login.jsp" />">Вход</a>
-        </security:authorize>
-        <security:authorize ifNotGranted="ANONYM" >
-          <a href="<c:url value="/logout" />">Выход</a>
-        </security:authorize>
+
+    <div class="navbar navbar-default navbar-static-top"> 
+      <div class="container"> 
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <security:authorize ifAnyGranted="ANONYM" >
+              <a href="<c:url value="/login.jsp" />">Вход для администратора</a>
+            </security:authorize>
+            <security:authorize ifNotGranted="ANONYM" >
+              <a href="<c:url value="/logout" />">Выход</a>
+            </security:authorize> 
+          </li>
+        </ul>
+
       </div>
-      <div class="menu"> <%@include file="/WEB-INF/jsp/menu.jsp" %> </div>
-      <div class="content"> 
+    </div>
+
+    <div class="top-menu navbar"> 
+      <div class="container"> 
+        <%@include file="/WEB-INF/jsp/cart.jsp" %>
+      </div>
+    </div>
+
+    <div class="container">
+
+       <%@include file="/WEB-INF/jsp/menu.jsp" %> 
+      <div class="content" style="overflow: hidden;" > 
 

@@ -8,9 +8,12 @@
 
 <%@include file="/WEB-INF/jsp/tags.jsp" %>
 
-<div> 
+<div style="
+    float: right;
+    font-size: 16px;
+"> 
   Моя корзина: <br/>
   Товаров: ${cartInfo.count} <br/>
   Сумма: ${cartInfo.summ} <br/>
-  <a href="<c:url value="/cart/show" />">Оформить заказ</a>
+  <a type="button" class="btn btn-success" href="<c:url value="/cart/show" />">Оформить заказ</a>
 </div>

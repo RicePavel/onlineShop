@@ -13,26 +13,65 @@
 <h2>${category.name}</h2>
 
 <security:authorize url="/product/add" >
-  <form action="<c:url value="/product/add" />" >
-    Название: <input type="text" name="name" value="${param['name']}" /> <br/>
-    Описание: <textarea name="description" >${param['description']}</textarea> <br/>
-    Цена: <input type="text" name="price" value="${param['price']}" /> <br/>
+  <form class="form-horizontal" role="form" action="<c:url value="/product/add" />" >
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Название:</label> 
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="name" value="${param['name']}" /> 
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label  class="col-sm-2 control-label">Описание:</label> 
+      <div class="col-sm-10">
+        <textarea class="form-control" name="description" >${param['description']}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label  class="col-sm-2 control-label">Цена:</label>  
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="price" value="${param['price']}" />
+      </div>
+    </div>
+
     <input type="hidden" name="categoryId" value="${param['categoryId']}" >
-    <input type="submit" name="submit" value="Добавить" />
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit"  class="btn btn-default" name="submit" value="Добавить" />
+      </div>
+    </div>
+
   </form>
 </security:authorize>
 
 <c:forEach items="${list}" var="product" > 
-  <div> ${product.name} ${product.description} ${product.price}
-    <security:authorize url="/product/delete" >
-      <a href="<c:url value="/product/delete?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Удалить</a>
-    </security:authorize>
-    <security:authorize url="/product/change" >
-      <a href="<c:url value="/product/change?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Изменить</a>
-    </security:authorize>
-    <security:authorize url="/cart/addProduct" >
-      <a href="<c:url value="/cart/addProduct?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Добавить в корзину</a>
-    </security:authorize>
+  <div class="order-item">
+    <div class="order-left-part">
+      <div class="order-title">
+        ${product.name} 
+      </div>
+      <div class="order-desc">
+        ${product.description} 
+      </div>
+    </div>
+    <div class="order-right-part">
+      <div class="order-price">
+        ${product.price}
+      </div>
+      <div class="order-button">
+        <security:authorize url="/cart/addProduct" >
+          <a type="button" class="btn btn-danger" href="<c:url value="/cart/addProduct?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Добавить в корзину</a>
+        </security:authorize>
+        <security:authorize url="/product/delete" >
+          <a type="button" class="btn btn-danger" href="<c:url value="/product/delete?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Удалить</a>
+        </security:authorize>
+        <security:authorize url="/product/change" >
+          <a type="button" class="btn btn-primary" href="<c:url value="/product/change?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Изменить</a>
+        </security:authorize>
+      </div>
+    </div>
   </div>
 </c:forEach>
 
