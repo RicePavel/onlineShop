@@ -75,8 +75,13 @@ public class CartController extends WebController {
   }
   
   @RequestMapping(value = "/show", params = "ajax")
-  public CartInfo getCurrent(HttpSession session) {
-    return cartService.getCartInfo(session);
+  @ResponseBody
+  public Map<String, Object> getCurrent(HttpSession session) {
+    Map<String, Object> result = new HashMap();
+    CartInfo cartInfo = cartService.getCartInfo(session);
+    result.put("count", cartInfo.count);
+    result.put("summ", cartInfo.summ);
+    return result;
   }
   
   @RequestMapping("/show")

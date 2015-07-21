@@ -1,3 +1,4 @@
 
-
-
+function getBaseUrl() {
+  return "/onlineShop";
+}

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,26 +22,29 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "orders")
 public class Order {
-  
+
   @Id
   @javax.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "order_item_id")
   private Long orderId;
-  
+
   @OneToMany(mappedBy = "order")
   private List<OrderItem> orderItemList;
-  
+
   @NotEmpty(message = "ФИО - значение должно быть задано")
   @Column(name = "fio")
   private String fio;
-  
+
   @NotEmpty(message = "Email - значение должно быть задано")
   @Column(name = "email")
   private String email;
-  
+
   @NotEmpty(message = "ФИО - значение должно быть задано")
   @Column(name = "address")
   private String address;
+
+  @OneToOne(mappedBy = "order")
+  private OrderFile file;
 
   public Long getOrderId() {
     return orderId;
@@ -81,23 +85,31 @@ public class Order {
   public void setEmail(String email) {
     this.email = email;
   }
-  
+
   public double getTotalSummPrice() {
     List<OrderItem> list = getOrderItemList();
     double price = 0;
-    for (OrderItem item: list) {
+    for (OrderItem item : list) {
       price += item.getSummPrice();
     }
     return price;
   }
-  
+
   public double getTotalQuantity() {
     List<OrderItem> list = getOrderItemList();
     double quantity = 0;
-    for (OrderItem item: list) {
+    for (OrderItem item : list) {
       quantity += item.getQuantity();
     }
     return quantity;
   }
-  
+
+  public OrderFile getFile() {
+    return file;
+  }
+
+  public void setFile(OrderFile file) {
+    this.file = file;
+  }
+
 }

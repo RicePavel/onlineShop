@@ -62,7 +62,7 @@
       </div>
       <div class="order-button">
         <security:authorize url="/cart/addProduct" >
-          <a type="button" class="btn btn-danger" href="<c:url value="/cart/addProduct?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Добавить в корзину</a>
+          <a type="button" class="btn btn-danger addToCartButton" href="<c:url value="/cart/addProduct?productId=${product.productId}&categoryId=${product.category.categoryId}" />" data-productId="${product.productId}" >Купить</a>
         </security:authorize>
         <security:authorize url="/product/delete" >
           <a type="button" class="btn btn-danger" href="<c:url value="/product/delete?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Удалить</a>

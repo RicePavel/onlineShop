@@ -1,38 +1,52 @@
 
+$(document).ready(function () {
+  $('body').on('click', '.addToCartButton', function () {
+    var link = $(this);
+    addProductToCart(link);
+    return false;
+  })
+});
 
-
-
-function addToProductToCart(button) {
-  var addCartUrl = '';
-  var productId = getProductId(button);
-  var params = {productId: productId};
+function addProductToCart(link) {
+  var addCartUrl = getBaseUrl() + "/cart/addProduct";
+  var productId = link.attr('data-productId');
+  var params = {productId: productId, ajax: 1};
   $.ajax({
     url: addCartUrl,
-    params: params,
+    data: params,
     success: function (response) {
       if (response.status == 'true') {
-        showBuy(button);
+        showBuy(link);
         updateCart();
       }
     }
   });
 }
 
+function showBuy(link) {
+  link.removeClass('btn-danger');
+  link.addClass('btn-success');
+  link.text('Товар в корзине!');
+}
+
+
 function updateCart() {
-  var showCartUrl = '';
+  var showCartUrl = getBaseUrl() + "/cart/show?ajax=1";
   $.ajax({
     url: showCartUrl,
     success: function (response) {
-      if (response.status == 'true') {
-        var cartInfo = response.cartInfo;
-        updateShowCart(cartInfo);
+      var count = response.count;
+      var summ = response.summ;
+      if (count != undefined && summ != undefined) {
+        updateShowCart(count, summ);
       }
     }
   });
-  
-  function updateShowCart(cartInfo) {
-    
+
+  function updateShowCart(count, summ) {
+    $('#cartInfoCount').text(count);
+    $('#cartInfoSumm').text(summ);
   }
-  
+
 }
 

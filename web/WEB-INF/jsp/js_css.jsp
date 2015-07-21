@@ -3,4 +3,8 @@
 <link rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap.min.css' />" />
     <link rel="stylesheet" href="<c:url value='/bootstrap/css/bootstrap-theme.css' />" />
     <link rel="stylesheet" href="<c:url value='/css/project.css' />" />
-    <script src="bootstrap/js/bootstrap.min.js" ></script>
+    <script src="<c:url value='/js/lib/jquery-1.11.3.js' />" ></script>
+    <script src="<c:url value='/bootstrap/js/bootstrap.min.js' />" ></script>
+    <script src="<c:url value='/js/main.js' />" ></script>
+    <script src="<c:url value='/js/cart.js' />" ></script>
+    
