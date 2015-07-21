@@ -46,7 +46,6 @@ public class Order {
   @Column(name = "address")
   private String address;
 
-  @NotNull
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "create_date")
   private Date createDate;

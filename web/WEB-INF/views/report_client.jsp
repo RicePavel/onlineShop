@@ -4,7 +4,7 @@
 
 <%@include file="/WEB-INF/jsp/errors.jsp" %>
 
-<form action="<c:url value="/report/category" />">
+<form action="<c:url value="/report/client" />">
   <input type="text" name="date_from" class="date" value="${dateFrom}" />
   <input type="text" name="date_to" class="date" value="${dateTo}" />
   
@@ -13,7 +13,7 @@
 
 <h2>Отчет по клиентам </h2>
 
-<table> 
+<table class="table" > 
   <tr>
     <th> Клиент </th>
     <th> Количество </th>
@@ -22,8 +22,8 @@
   <c:forEach items="${list}" var="arr">
     <tr>
       <td>${arr[0]}</td>
-      <td>${arr[1]}</td>
       <td>${arr[2]}</td>
+      <td>${arr[1]}</td>
     </tr>
   </c:forEach>
   <tr>

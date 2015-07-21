@@ -30,7 +30,6 @@
   margin: 20px 0;
 }
 
-// ------
 
 .standart-form {
   width: 500px;
@@ -50,13 +49,13 @@
   padding: 10px;
 }
 
-// меню
+/* меню */
 
 .menu .list-group-item:hover {
   background-color: rgb(209, 209, 209);
 }
 
-// заказы
+/* заказы */
 
 .order-img {
   width: 100px;
@@ -64,6 +63,7 @@
 }
 
 .order-item {
+  border-bottom: 1px solid rgb(164, 164, 164);
   overflow: hidden;
   overflow: hidden;
   padding: 10px;

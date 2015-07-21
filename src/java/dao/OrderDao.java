@@ -24,36 +24,36 @@ public class OrderDao extends Dao<Order> {
   }
   
   public List<Object[]> reportByCategories(Date dateFrom, Date dateTo) {
-    String hql = "select p.category, sum(item.price), count(item.orderItemId) "
-            + " from OrderItem as item, item.product as p, item.order as o, item.product.category as cat "
-            + " group by cat.categoryId "
-            + " where o.createDate >= :dateFrom and o.createDate <= :dateTo ";
+    String hql = " select p.category.categoryId, sum(item.price), count(item.orderItemId) " +
+                 " from OrderItem as item inner join item.product as p inner join item.order as o " +
+                 " where o.createDate >= :dateFrom and o.createDate <= :dateTo " +
+                 " group by p.category.categoryId ";
     Query query = currentSession().createQuery(hql);
-    query.setDate("dateFrom", dateFrom);
-    query.setDate("dateTo", dateTo);
+    query.setTimestamp("dateFrom", dateFrom);
+    query.setTimestamp("dateTo", dateTo);
     return query.list();
   }
   
    public List<Object[]> reportByProducts(Long categoryId, Date dateFrom, Date dateTo) {
-    String hql = "select p.product, sum(item.price), count(item.orderItemId) "
-            + " from OrderItem as item, item.product as p, item.order as o, item.product.category as cat "
-            + " group by p.productId "
-            + " where o.createDate >= :dateFrom and o.createDate <= :dateTo and p.categoryId = :categoryId ";
+    String hql = "select p.productId, sum(item.price), count(item.orderItemId) "
+            + " from OrderItem as item inner join item.product as p inner join item.order as o inner join p.category as cat "
+            + " where o.createDate >= :dateFrom and o.createDate <= :dateTo and cat.categoryId = :categoryId "
+            + " group by p.productId ";
     Query query = currentSession().createQuery(hql);
-    query.setDate("dateFrom", dateFrom);
-    query.setDate("dateTo", dateTo);
+    query.setTimestamp("dateFrom", dateFrom);
+    query.setTimestamp("dateTo", dateTo);
     query.setParameter("categoryId", categoryId);
     return query.list();
   }
    
    public List<Object[]> reportByClients(Date dateFrom, Date dateTo) {
      String hql = "select o.email, sum(item.price), count(item.orderItemId) "
-            + " from OrderItem as item, item.product as p, item.order as o, item.product.category as cat "
-            + " group by o.email "
-            + " where o.createDate >= :dateFrom and o.createDate <= :dateTo and p.categoryId = :categoryId ";
+            + " from OrderItem as item inner join item.order as o  "
+            + " where o.createDate >= :dateFrom and o.createDate <= :dateTo "
+            + " group by o.email ";
     Query query = currentSession().createQuery(hql);
-    query.setDate("dateFrom", dateFrom);
-    query.setDate("dateTo", dateTo);
+    query.setTimestamp("dateFrom", dateFrom);
+    query.setTimestamp("dateTo", dateTo);
     return query.list();
    }
   

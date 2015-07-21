@@ -12,7 +12,7 @@
 
 
 <c:forEach items="${list}" var="order" > 
-  <h3> ${order.fio} ${order.email} ${order.address} </h3>
+  <h3> ${order.fio} ${order.email} ${order.address} <fmt:formatDate value="${order.createDate}" pattern="dd.MM.yyyy HH:mm" /> </h3>
   <table class="table table-bordered" >
     <tr>
       <td>Название</td>

@@ -27,7 +27,7 @@ import support.DateUtils;
  */
 @Controller
 @RequestMapping("/report")
-public class ReportController {
+public class ReportController extends WebController {
   
   @Autowired
   private OrderService orderService;
@@ -68,7 +68,7 @@ public class ReportController {
     return "report_product";
   }
   
-  @RequestMapping("/clients")
+  @RequestMapping("/client")
   public String byClients(Map<String, Object> model, 
          @RequestParam(value = "date_from", required = false) String dateFromStr,
           @RequestParam(value = "date_to", required = false) String dateToStr) {
@@ -90,7 +90,7 @@ public class ReportController {
     int n = 0;
     for (Object[] arr: list) {
       Category category = (Category) arr[0];
-      int totalSumm = (arr[1] != null ? Integer.valueOf(arr[1].toString()) : 0);
+      double totalSumm = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
       jsonStr += "['" + category.getName() + "', " + totalSumm + "]";
       if (n != arr.length) {
         jsonStr += ",";

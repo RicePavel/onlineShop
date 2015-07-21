@@ -4,7 +4,7 @@
 
 <%@include file="/WEB-INF/jsp/errors.jsp" %>
 
-<form action="<c:url value="/report/category" />">
+<form action="<c:url value="/report/product" />">
   <input type="text" name="date_from" class="date" value="${dateFrom}" />
   <input type="text" name="date_to" class="date" value="${dateTo}" />
   
@@ -19,7 +19,7 @@
 
 <h2>Отчет по покупкам по категории ${category.name} </h2>
 
-<table> 
+<table class="table" > 
   <tr>
     <th> Товар </th>
     <th> Количество </th>
@@ -29,8 +29,8 @@
     <c:set var="product" value="${arr[0]}" />
     <tr>
       <td>${product.name}</td>
-      <td>${arr[1]}</td>
       <td>${arr[2]}</td>
+      <td>${arr[1]}</td>
     </tr>
   </c:forEach>
   <tr>

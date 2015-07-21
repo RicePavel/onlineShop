@@ -18,6 +18,6 @@ public class ReportData {
   
   public int totalCount = 0;
   
-  public int totalSumm = 0;
+  public double totalSumm = 0;
   
 }

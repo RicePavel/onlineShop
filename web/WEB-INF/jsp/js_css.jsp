@@ -14,6 +14,6 @@
     
     <script type="text/javascript">
       $(document).ready(function() {
-        $('input.date').datepicker();
+        $('input.date').datepicker({ dateFormat: 'dd.mm.yy' });
       });
     </script>

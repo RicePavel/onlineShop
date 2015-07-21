@@ -24,7 +24,7 @@ public class ConvertUtils {
     }
   }
 
-  private final static String[] formats = {"dd.MM.yyyy", "yyyy-MM-dd"};
+  private final static String[] formats = {"dd.MM.yyyy", "yyyy-MM-dd", "yyyy-MM-dd HH:mm"};
 
   public static Date getDate(String text) throws IllegalArgumentException {
     Date date = null;

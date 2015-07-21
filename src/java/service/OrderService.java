@@ -5,10 +5,12 @@
  */
 package service;
 
+import dao.CategoryDao;
 import dao.OrderDao;
 import dao.OrderItemDao;
 import dao.ProductDao;
 import datastructure.ReportData;
+import entity.Category;
 import entity.Order;
 import entity.OrderItem;
 import entity.Product;
@@ -43,16 +45,22 @@ public class OrderService {
   
   @Autowired
   private ProductDao productDao;
+  
+  @Autowired
+  private CategoryDao categoryDao;
 
   public ReportData reportByCategories(Date dateFrom, Date dateTo) {
     List<Object[]> list = orderDao.reportByCategories(dateFrom, dateTo);
     int totalCount = 0;
-    int totalSumm = 0;
+    double totalSumm = 0;
     for (Object[] arr: list) {
-      int price = (arr[1] != null ? Integer.valueOf(arr[1].toString()) : 0);
-      int count = (arr[2] != null ? Integer.valueOf(arr[2].toString()) : 0);
+      Long categoryId = Long.valueOf(arr[0].toString());
+      Category category = categoryDao.find(categoryId);
+      arr[0] = category;
+      double summ = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
+      double count = (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
       totalCount += count;
-      totalSumm += price; 
+      totalSumm += summ; 
     }
     ReportData data = new ReportData();
     data.list = list;
@@ -64,12 +72,15 @@ public class OrderService {
   public ReportData reportByProducts(Long categoryId, Date dateFrom, Date dateTo) {
     List<Object[]> list = orderDao.reportByProducts(categoryId, dateFrom, dateTo);
     int totalCount = 0;
-    int totalSumm = 0;
+    double totalSumm = 0;
     for (Object[] arr: list) {
-      int price = (arr[1] != null ? Integer.valueOf(arr[1].toString()) : 0);
-      int count = (arr[2] != null ? Integer.valueOf(arr[2].toString()) : 0);
+      Long productId = Long.valueOf(arr[0].toString());
+      Product product = productDao.find(productId);
+      arr[0] = product;
+      double summ = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
+      double count = (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
       totalCount += count;
-      totalSumm += price; 
+      totalSumm += summ; 
     }
     ReportData data = new ReportData();
     data.list = list;
@@ -81,12 +92,12 @@ public class OrderService {
   public ReportData reportByClients(Date dateFrom, Date dateTo) {
     List<Object[]> list = orderDao.reportByClients(dateFrom, dateTo);
     int totalCount = 0;
-    int totalSumm = 0;
+    double totalSumm = 0;
     for (Object[] arr: list) {
-      int price = (arr[1] != null ? Integer.valueOf(arr[1].toString()) : 0);
-      int count = (arr[2] != null ? Integer.valueOf(arr[2].toString()) : 0);
+      double summ = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
+      double count = (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
       totalCount += count;
-      totalSumm += price; 
+      totalSumm += summ; 
     }
     ReportData data = new ReportData();
     data.list = list;

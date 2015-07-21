@@ -31,9 +31,9 @@
   }
 </script>
 
-<div id="piechart_3d" > </div>
+<div id="piechart_3d" style="height: 300px;" > </div>
 
-<table> 
+<table class="table"> 
   <tr>
     <th> Категория </th>
     <th> Количество </th>
@@ -42,9 +42,9 @@
   <c:forEach items="${list}" var="arr">
     <c:set var="category" value="${arr[0]}" />
     <tr>
-      <td> <a href="<c:url value="/report/product?categoryId=${category.categoryId}" />"> ${category.name} </a> </td>
-      <td>${arr[1]}</td>
+      <td> <a href="<c:url value="/report/product?categoryId=${category.categoryId}&dateFrom=${dateFrom}&dateTo=${dateTo}" />"> ${category.name} </a> </td>
       <td>${arr[2]}</td>
+      <td>${arr[1]}</td>
     </tr>
   </c:forEach>
   <tr>

@@ -20,10 +20,10 @@
     <a class="list-group-item" href="<c:url value="/setting/show" />">Настройки</a>
   </security:authorize>
   <security:authorize url="/report/category">
-    <a class="list-group-item" href="<c:url value="/report/search" />">Объем продаж по категориям</a>
+    <a class="list-group-item" href="<c:url value="/report/category" />">Объем продаж по категориям</a>
   </security:authorize>
-  <security:authorize url="/report/clients">
-    <a class="list-group-item" href="<c:url value="/report/search" />">Объем покупок по клиентам</a>
+  <security:authorize url="/report/client">
+    <a class="list-group-item" href="<c:url value="/report/client" />">Объем покупок по клиентам</a>
   </security:authorize>
 
   <span class="list-group-item active">Товары по категориям </span>
