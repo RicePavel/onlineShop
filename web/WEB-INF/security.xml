@@ -10,10 +10,12 @@
   <http auto-config='true' use-expressions="true" >
     
     <intercept-url pattern="/category/*" access="hasRole('ADMIN')" />
+    <intercept-url pattern="/setting/*" access="hasRole('ADMIN')" />
     <intercept-url pattern="/order/*" access="hasRole('ADMIN')" />
     <intercept-url pattern="/product/add" access="hasRole('ADMIN')" />
     <intercept-url pattern="/product/change" access="hasRole('ADMIN')" />
     <intercept-url pattern="/product/delete" access="hasRole('ADMIN')" />
+    <intercept-url pattern="/report/*" access="hasRole('ADMIN')" />
     
     <intercept-url pattern="/cart/addProduct" access="isAnonymous()" />
     <intercept-url pattern="/cart/show" access="isAnonymous()" />

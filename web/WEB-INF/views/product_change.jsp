@@ -12,7 +12,7 @@
 
 
 <security:authorize url="/product/change" >
-  <form class="form-horizontal" role="form" action="<c:url value="/product/change" />" >
+  <form class="form-horizontal" role="form" action="<c:url value="/product/change" />" enctype="multipart/form-data" method="POST" >
     <div class="form-group">
       <label class="col-sm-2 control-label">Название:</label>
       <div class="col-sm-10">
@@ -38,11 +38,22 @@
     <input type="hidden" name="categoryId" value="${param['categoryId']}" />
 
     <div class="form-group">
+      <label  class="col-sm-2 control-label">Картинка:</label>  
+      <div class="col-sm-10">
+        <input  type="file" name="file" />
+      </div>
+    </div>
+
+    <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <input class="btn btn-default" type="submit" name="submit" value="Сохранить" />
       </div>
     </div>
   </form>
 </security:authorize>
+
+<c:if test="${product.imgContent != null && ! empty product.imgContent}">
+  <img src="${product.imgContent}" style="width: 100px; height: 100p;" />
+</c:if>
 
 <%@include file="/WEB-INF/jsp/bottom.jsp" %>

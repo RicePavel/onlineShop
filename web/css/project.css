@@ -50,7 +50,18 @@
   padding: 10px;
 }
 
+// меню
+
+.menu .list-group-item:hover {
+  background-color: rgb(209, 209, 209);
+}
+
 // заказы
+
+.order-img {
+  width: 100px;
+  float: left;
+}
 
 .order-item {
   overflow: hidden;
@@ -65,18 +76,25 @@
 }
 
 .order-title {
-    font-size: 20px;
+  font-size: 20px;
+  margin-left: 100px;
+  padding: 0 10px;
+}
+
+.order-desc {
+  margin-left: 100px;
+  padding: 0 10px;
 }
 
 .order-right-part {
-    padding: 10px;
-    margin-left: 650px;
+  padding: 10px;
+  margin-left: 650px;
 }
 
 .order-price {
-    font-size: 30px;
-    color: green;
-    font-style: italic;
+  font-size: 30px;
+  color: green;
+  font-style: italic;
 }
 
 

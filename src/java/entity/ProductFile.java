@@ -20,37 +20,37 @@ import javax.validation.constraints.NotNull;
  * @author Rice Pavel
  */
 @Entity
-@Table(name = "order_file")
-public class OrderFile {
-  
-   @Id
+@Table(name = "product_file")
+public class ProductFile {
+
+  @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "order_file_id")
-  private Long orderFileId;
-   
-   @NotNull
-   @OneToOne
-   @JoinColumn(name = "order_id")
-   private Order order;
-  
-   @NotNull
-   @Column(name = "name")
-   private String name;
+  @Column(name = "product_file_id")
+  private Long productFileId;
 
-  public Long getOrderFileId() {
-    return orderFileId;
+  @NotNull
+  @OneToOne
+  @JoinColumn(name = "product_id")
+  private Product product;
+
+  @NotNull
+  @Column(name = "name")
+  private String name;
+
+  public Long getProductFileId() {
+    return productFileId;
   }
 
-  public void setOrderFileId(Long orderFileId) {
-    this.orderFileId = orderFileId;
+  public void setProductFileId(Long productFileId) {
+    this.productFileId = productFileId;
   }
 
-  public Order getOrder() {
-    return order;
+  public Product getProduct() {
+    return product;
   }
 
-  public void setOrder(Order order) {
-    this.order = order;
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
   public String getName() {
@@ -60,7 +60,5 @@ public class OrderFile {
   public void setName(String name) {
     this.name = name;
   }
-   
-   
-   
+
 }

@@ -13,7 +13,7 @@
 <h2>${category.name}</h2>
 
 <security:authorize url="/product/add" >
-  <form class="form-horizontal" role="form" action="<c:url value="/product/add" />" >
+  <form class="form-horizontal" role="form" action="<c:url value="/product/add" />" enctype="multipart/form-data" method="POST" >
     <div class="form-group">
       <label class="col-sm-2 control-label">Название:</label> 
       <div class="col-sm-10">
@@ -38,6 +38,13 @@
     <input type="hidden" name="categoryId" value="${param['categoryId']}" >
 
     <div class="form-group">
+      <label  class="col-sm-2 control-label">Картинка:</label>  
+      <div class="col-sm-10">
+        <input  type="file" name="file" />
+      </div>
+    </div>
+
+    <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <input type="submit"  class="btn btn-default" name="submit" value="Добавить" />
       </div>
@@ -49,6 +56,11 @@
 <c:forEach items="${list}" var="product" > 
   <div class="order-item">
     <div class="order-left-part">
+      <div class="order-img">
+        <c:if test="${product.imgContent != null && ! empty product.imgContent}">
+          <img src="${product.imgContent}" style="width: 100px; height: 100p;" />
+        </c:if>
+      </div>
       <div class="order-title">
         ${product.name} 
       </div>
@@ -73,6 +85,7 @@
       </div>
     </div>
   </div>
+  <div style="clear:both;"> </div>
 </c:forEach>
 
 <%@include file="/WEB-INF/jsp/bottom.jsp" %>

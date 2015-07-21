@@ -8,9 +8,11 @@ package service;
 import dao.OrderDao;
 import dao.OrderItemDao;
 import dao.ProductDao;
+import datastructure.ReportData;
 import entity.Order;
 import entity.OrderItem;
 import entity.Product;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -42,6 +44,57 @@ public class OrderService {
   @Autowired
   private ProductDao productDao;
 
+  public ReportData reportByCategories(Date dateFrom, Date dateTo) {
+    List<Object[]> list = orderDao.reportByCategories(dateFrom, dateTo);
+    int totalCount = 0;
+    int totalSumm = 0;
+    for (Object[] arr: list) {
+      int price = (arr[1] != null ? Integer.valueOf(arr[1].toString()) : 0);
+      int count = (arr[2] != null ? Integer.valueOf(arr[2].toString()) : 0);
+      totalCount += count;
+      totalSumm += price; 
+    }
+    ReportData data = new ReportData();
+    data.list = list;
+    data.totalSumm = totalSumm;
+    data.totalCount = totalCount;
+    return data;
+  }
+  
+  public ReportData reportByProducts(Long categoryId, Date dateFrom, Date dateTo) {
+    List<Object[]> list = orderDao.reportByProducts(categoryId, dateFrom, dateTo);
+    int totalCount = 0;
+    int totalSumm = 0;
+    for (Object[] arr: list) {
+      int price = (arr[1] != null ? Integer.valueOf(arr[1].toString()) : 0);
+      int count = (arr[2] != null ? Integer.valueOf(arr[2].toString()) : 0);
+      totalCount += count;
+      totalSumm += price; 
+    }
+    ReportData data = new ReportData();
+    data.list = list;
+    data.totalSumm = totalSumm;
+    data.totalCount = totalCount;
+    return data;
+  }
+  
+  public ReportData reportByClients(Date dateFrom, Date dateTo) {
+    List<Object[]> list = orderDao.reportByClients(dateFrom, dateTo);
+    int totalCount = 0;
+    int totalSumm = 0;
+    for (Object[] arr: list) {
+      int price = (arr[1] != null ? Integer.valueOf(arr[1].toString()) : 0);
+      int count = (arr[2] != null ? Integer.valueOf(arr[2].toString()) : 0);
+      totalCount += count;
+      totalSumm += price; 
+    }
+    ReportData data = new ReportData();
+    data.list = list;
+    data.totalSumm = totalSumm;
+    data.totalCount = totalCount;
+    return data;
+  }
+  
   public void makeOrder(String fio, String address, String email, List<String> errors, HttpSession session) {
     Map<Long, Integer> cart = cartService.getCurrentCart(session);
     if (cart.isEmpty()) {
@@ -63,6 +116,7 @@ public class OrderService {
     order.setFio(fio);
     order.setAddress(address);
     order.setEmail(email);
+    order.setCreateDate(new Date());
     if (validator.validate(errors, order)) {
       orderDao.save(order);
       for (Long productId : cart.keySet()) {

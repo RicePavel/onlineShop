@@ -8,11 +8,13 @@ package service;
 import dao.CategoryDao;
 import dao.ProductDao;
 import entity.Product;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import support.ConvertUtils;
 import support.EntityValidator;
 import support.Errors;
@@ -34,6 +36,9 @@ public class ProductService {
   @Autowired
   private EntityValidator validator;
   
+  @Autowired
+  private ProductFileService fileService;
+  
   public List<Product> searchByCategory(Long categoryId) {
     return productDao.searchByCategory(categoryId);
   }
@@ -52,26 +57,28 @@ public class ProductService {
     return productDao.find(productId);
   }
   
-  public void add(String name, String description, String price, Long categoryId, List<String> errors) {
+  public void add(String name, String description, String price, Long categoryId, MultipartFile file, List<String> errors) throws IOException {
     Double doublePrice = ConvertUtils.getDouble(price);
     if (doublePrice != null) {
       Product product = new Product();
       setParams(product, name, description, doublePrice, categoryId);
       if (validator.validate(errors, product)) {
         productDao.save(product);
+        fileService.save(file, product, errors);
       }
     } else {
       errors.add(Errors.notDecimal("Цена"));
     }
   }
   
-  public void change(Long productId, String name, String description, String price, List<String> errors) {
+  public void change(Long productId, String name, String description, String price, MultipartFile file, List<String> errors) throws IOException {
     Double doublePrice = ConvertUtils.getDouble(price);
     if (doublePrice != null) {
       Product product = productDao.find(productId);
       setParams(product, name, description, doublePrice);
       if (validator.validate(errors, product)) {
         productDao.update(product);
+        fileService.save(file, product, errors);
       } else {
         productDao.evict(product);
       }

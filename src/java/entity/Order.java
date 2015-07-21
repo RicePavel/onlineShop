@@ -5,14 +5,17 @@
  */
 package entity;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -43,8 +46,10 @@ public class Order {
   @Column(name = "address")
   private String address;
 
-  @OneToOne(mappedBy = "order")
-  private OrderFile file;
+  @NotNull
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "create_date")
+  private Date createDate;
 
   public Long getOrderId() {
     return orderId;
@@ -104,12 +109,14 @@ public class Order {
     return quantity;
   }
 
-  public OrderFile getFile() {
-    return file;
+  public Date getCreateDate() {
+    return createDate;
   }
 
-  public void setFile(OrderFile file) {
-    this.file = file;
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
   }
+  
+  
 
 }

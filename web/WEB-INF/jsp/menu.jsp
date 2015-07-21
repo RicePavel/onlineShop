@@ -16,6 +16,15 @@
   <security:authorize url="/order/search" >
     <a class="list-group-item" href="<c:url value="/order/search" />">Смотреть заказы</a>
   </security:authorize>
+  <security:authorize url="/setting/show" >
+    <a class="list-group-item" href="<c:url value="/setting/show" />">Настройки</a>
+  </security:authorize>
+  <security:authorize url="/report/category">
+    <a class="list-group-item" href="<c:url value="/report/search" />">Объем продаж по категориям</a>
+  </security:authorize>
+  <security:authorize url="/report/clients">
+    <a class="list-group-item" href="<c:url value="/report/search" />">Объем покупок по клиентам</a>
+  </security:authorize>
 
   <span class="list-group-item active">Товары по категориям </span>
 

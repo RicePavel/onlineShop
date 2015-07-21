@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,35 +25,40 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Новый профиль
  */
 @Entity
-@Table(name ="product")
+@Table(name = "product")
 public class Product {
-  
+
   @Id
   @javax.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "product_id")
   private Long productId;
-  
+
   @NotEmpty(message = "не передан параметр - название")
   @Column(name = "name")
   private String name;
-  
+
   @Type(type = "text")
   @Column(name = "description")
   private String description;
-  
+
   @NotNull(message = "не передан параметр - цена")
   @Column(name = "price")
   private Double price;
-  
+
   @NotNull(message = "не передан параметр - категория")
   @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;
-  
+
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "close_date")
   private Date closeDate;
 
+  @OneToOne(mappedBy = "product")
+  private ProductFile file;
+
+  private String imgContent;
+  
   public Long getProductId() {
     return productId;
   }
@@ -100,7 +106,23 @@ public class Product {
   public void setCloseDate(Date closeDate) {
     this.closeDate = closeDate;
   }
- 
+
+  public ProductFile getFile() {
+    return file;
+  }
+
+  public void setFile(ProductFile file) {
+    this.file = file;
+  }
+
+  public String getImgContent() {
+    return imgContent;
+  }
+
+  public void setImgContent(String imgContent) {
+    this.imgContent = imgContent;
+  }
   
   
+
 }
