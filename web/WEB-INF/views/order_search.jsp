@@ -10,6 +10,7 @@
 
 <%@include file="/WEB-INF/jsp/errors.jsp" %>
 
+<h2>Заказы, сделанные клиентами</h2>
 
 <c:forEach items="${list}" var="order" > 
   <h3> ${order.fio} ${order.email} ${order.address} <fmt:formatDate value="${order.createDate}" pattern="dd.MM.yyyy HH:mm" /> </h3>

@@ -54,47 +54,19 @@
 </security:authorize>
 
 <c:forEach items="${list}" var="product" > 
-  <div class="order-item">
-    <div class="order-left-part">
-      <div class="order-img">
-        <c:if test="${product.imgContent != null && ! empty product.imgContent}">
-          <img src="${product.imgContent}" style="width: 100px; height: 100p;" />
-        </c:if>
-      </div>
-      <div class="order-title">
-        ${product.name} 
-      </div>
-      <div class="order-desc">
-        ${product.description} 
-      </div>
-    </div>
-    <div class="order-right-part">
-      <div class="order-price">
-        <fmt:formatNumber value="${product.price}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />&nbsp;р.
-      </div>
-      <div class="order-button">
-        <security:authorize url="/cart/addProduct" >
-          <a type="button" class="btn btn-danger addToCartButton" href="<c:url value="/cart/addProduct?productId=${product.productId}&categoryId=${product.category.categoryId}" />" data-productId="${product.productId}" >Купить</a>
-        </security:authorize>
-        <security:authorize url="/product/delete" >
-          <a type="button" class="btn btn-danger" href="<c:url value="/product/delete?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Удалить</a>
-        </security:authorize>
-        <security:authorize url="/product/change" >
-          <a type="button" class="btn btn-primary" href="<c:url value="/product/change?productId=${product.productId}&categoryId=${product.category.categoryId}" />">Изменить</a>
-        </security:authorize>
-      </div>
-    </div>
+  <div class="order-item" data-productId="${product.productId}">
+    <%@include file="/WEB-INF/views/product_show_one.jsp" %>
   </div>
   <div style="clear:both;"> </div>
 </c:forEach>
 
-  <c:if test="${countPages != null && countPages > 1}">
-    <div id="paginator" class="paginator"> </div>
-  </c:if>
-  
-  <c:url value="/product/search?categoryId=${param['categoryId']}" var="urlForPaginator" />
-  
-  <script type="text/javascript">
+<c:if test="${countPages != null && countPages > 1}">
+  <div id="paginator" class="paginator"> </div>
+</c:if>
+
+<c:url value="/product/search?categoryId=${param['categoryId']}" var="urlForPaginator" />
+
+<script type="text/javascript">
   paginator_example = new Paginator(
           "paginator", // id контейнера, куда ляжет пагинатор
   ${countPages}, // общее число страниц
@@ -103,6 +75,25 @@
           '${urlForPaginator}' // url страниц
           );
 </script>
-  
+
+<div id="currentPage" data-page="${page}" style="display: hidden;" > </div>
+
+<!-- модальное окно -->
+<div id="productModalWindow" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" > 
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Изменение товара</h3>
+      </div>
+      <div class="modal-body" id="productModalBody"> 
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<iframe id="changeIframe" name="change_form" style="display: none;"> </iframe>
+
 <%@include file="/WEB-INF/jsp/bottom.jsp" %>
 

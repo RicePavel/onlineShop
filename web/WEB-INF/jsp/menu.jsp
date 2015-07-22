@@ -10,28 +10,35 @@
 
 <div class="menu list-group">
 
-  <security:authorize url="/category/search" >
-    <a class="list-group-item" href="<c:url value="/category/search" />">Редактировать категории</a>
-  </security:authorize>
-  <security:authorize url="/order/search" >
-    <a class="list-group-item" href="<c:url value="/order/search" />">Смотреть заказы</a>
-  </security:authorize>
-  <security:authorize url="/setting/show" >
-    <a class="list-group-item" href="<c:url value="/setting/show" />">Настройки</a>
-  </security:authorize>
-  <security:authorize url="/report/category">
-    <a class="list-group-item" href="<c:url value="/report/category" />">Объем продаж по категориям</a>
-  </security:authorize>
-  <security:authorize url="/report/client">
-    <a class="list-group-item" href="<c:url value="/report/client" />">Объем покупок по клиентам</a>
-  </security:authorize>
-
-  <span class="list-group-item active">Товары по категориям </span>
-
-  <c:forEach items="${categoryList}" var="category" >
-    <security:authorize url="/product/search" >
-      <a class="list-group-item" href="<c:url value="/product/search?categoryId=${category.categoryId}" />">${category.name}</a>
+  <c:set value="${requestScope['javax.servlet.forward.request_uri']}?${requestScope['javax.servlet.forward.query_string']}" var="currentUrl" />
+  
+  <security:authorize ifAnyGranted="ADMIN" >
+    <span class="list-group-item active">Меню администратора</span>
     </security:authorize>
-  </c:forEach>
+
+    <security:authorize url="/category/search" >
+      <a class="list-group-item ${currentUrl.contains('/category/search') ? 'active-item' : ''}" href="<c:url value="/category/search" />">Редактировать категории</a>
+    </security:authorize>
+    <security:authorize url="/order/search" >
+      <a class="list-group-item ${currentUrl.contains('/order/search') ? 'active-item' : ''}" href="<c:url value="/order/search" />">Заказы клиентов</a>
+    </security:authorize>
+    <security:authorize url="/setting/show" >
+      <a class="list-group-item ${currentUrl.contains('/setting/show') ? 'active-item' : ''}" href="<c:url value="/setting/show" />">Настройки</a>
+    </security:authorize>
+    <security:authorize url="/report/category">
+      <a class="list-group-item ${currentUrl.contains('/report/category') ? 'active-item' : ''}" href="<c:url value="/report/category" />">Объем продаж по категориям</a>
+    </security:authorize>
+    <security:authorize url="/report/client">
+      <a class="list-group-item ${currentUrl.contains('/report/client') ? 'active-item' : ''}" href="<c:url value="/report/client" />">Объем покупок по клиентам</a>
+    </security:authorize>
+
+    <span class="list-group-item active">Товары по категориям </span>
+
+    <c:forEach items="${categoryList}" var="category" >
+      <security:authorize url="/product/search" >
+        <c:url value="/product/search?categoryId=${category.categoryId}" var="url" />
+        <a class="list-group-item ${currentUrl.contains(url) ? 'active-item' : ''}" href="${url}">${category.name}</a>
+      </security:authorize>
+    </c:forEach>
 
 </div>

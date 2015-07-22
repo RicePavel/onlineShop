@@ -9,12 +9,14 @@ import entity.Category;
 import entity.Product;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.CategoryService;
@@ -50,7 +52,7 @@ public class ProductController extends WebController  {
     Category category = categoryService.find(categoryId);
     
     int page = getPage(pageString);
-    int numberOnOnePage = 5;
+    int numberOnOnePage = 25;
     int start = (page -1) * numberOnOnePage;
     int count = productService.getCountByCategory(categoryId);
     int countPages = (int) Math.ceil((double) count / (double) numberOnOnePage);
@@ -98,10 +100,61 @@ public class ProductController extends WebController  {
   }
   
   @RequestMapping(value = "/change")
-  public String change(Map<String, Object> model, @RequestParam("productId") Long productId) {
+  public String change(Map<String, Object> model, @RequestParam("productId") Long productId) throws IOException {
     Product product = productService.find(productId);
+    product.setImgContent(fileService.getImgContent(product));
     model.put("product", product);
     return "product_change";
+  }
+  
+  @RequestMapping(value = "/change", params = {"ajax"})
+  public String changeShowAjaxForm(Map<String, Object> model, @RequestParam("productId") Long productId) throws IOException {
+    Product product = productService.find(productId);
+    product.setImgContent(fileService.getImgContent(product));
+    model.put("product", product);
+    return "product_change_ajax";
+  }
+  
+  @ResponseBody
+  @RequestMapping(value = "/change", params = {"ajax", "submit"})
+  public Map<String, String> changeByAjax(Map<String, Object> model,
+          @RequestParam("productId") Long productId,
+          @RequestParam(value = "name", required = false) String name,
+          @RequestParam(value = "description", required = false) String description,
+          @RequestParam(value = "price", required = false) String price,
+          @RequestParam(value = "submit", required = false) String submit,
+          @RequestParam(value = "file", required = false) MultipartFile file,
+          @RequestParam(value = "categoryId", required = false) Long categoryId) {
+    Map<String, String> map = new HashMap();
+    boolean status;
+    String error = "";
+    try {
+      List<String> errors = new ArrayList();
+      productService.change(productId, name, description, price, file, errors);
+      if (errors.isEmpty()) {
+        status = true;
+      } else {
+        status = false;
+        error = errors.toString();
+      }
+    } catch (Exception e) {
+      status = false;
+      error = (e.getMessage() != null ? e.getMessage() : "exception");
+    }
+    map.put("status", Boolean.toString(status));
+    map.put("error", error);
+    return map;
+  }
+  
+  @RequestMapping(value = "/show")
+  public String show(Map<String, Object> model,
+          @RequestParam("productId") Long productId,
+          @RequestParam(value = "page", required = false) String page) throws IOException {
+    Product product = productService.find(productId);
+    product.setImgContent(fileService.getImgContent(product));
+    model.put("product", product);
+    model.put("page", page);
+    return "product_show_one";
   }
   
   @RequestMapping(value = "/change", params = "submit")
@@ -112,7 +165,9 @@ public class ProductController extends WebController  {
           @RequestParam(value = "price", required = false) String price,
           @RequestParam(value = "submit", required = false) String submit,
           @RequestParam(value = "file", required = false) MultipartFile file,
-          @RequestParam(value = "categoryId", required = false) Long categoryId) throws IOException {
+          @RequestParam(value = "categoryId", required = false) Long categoryId,
+          @RequestParam(value = "page", required = false) String page,
+          RedirectAttributes ra) throws IOException {
     Product product = productService.find(productId);
     product.setImgContent(fileService.getImgContent(product));
     model.put("product", product);
@@ -121,6 +176,9 @@ public class ProductController extends WebController  {
       productService.change(productId, name, description, price, file, errors);
       model.put("errors", errors);
       if (errors.isEmpty()) {
+        if (page != null && !page.isEmpty()) {
+          ra.addAttribute("page", page);
+        }
         return "redirect:/product/search?categoryId=" + categoryId;
       }
     }
@@ -130,8 +188,13 @@ public class ProductController extends WebController  {
   @RequestMapping("/delete")
   public String delete(Map<String, Object> model, 
           @RequestParam("productId") Long productId,
-          @RequestParam(value = "categoryId", required = false) Long categoryId) {
+          @RequestParam(value = "categoryId", required = false) Long categoryId,
+          @RequestParam(value = "page", required = false) String page,
+          RedirectAttributes ra) {
     productService.close(productId);
+    if (page != null && !page.isEmpty()) {
+      ra.addAttribute("page", page);
+    }
     return "redirect:/product/search?categoryId=" + categoryId;
   }
   

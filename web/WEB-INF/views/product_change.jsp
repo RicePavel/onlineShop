@@ -30,12 +30,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Цена:</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="price" value="<fmt:formatNumber value="${product.price}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />" pattern="[0-9\s\.\,]+" title="Введите число" />
+        <input class="form-control" type="text" name="price" value="<fmt:formatNumber value="${product.price}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />" required pattern="[0-9\s\.\,]+" title="Введите число" />
       </div>
     </div>
 
     <input type="hidden" name="productId" value="${product.productId}" />
     <input type="hidden" name="categoryId" value="${param['categoryId']}" />
+    <input type="hidden" name="page" value="${param['page']}" />
 
     <div class="form-group">
       <label  class="col-sm-2 control-label">Картинка:</label>  
@@ -53,7 +54,7 @@
 </security:authorize>
 
 <c:if test="${product.imgContent != null && ! empty product.imgContent}">
-  <img src="${product.imgContent}" style="width: 100px; height: 100p;" />
+  <img src="${product.imgContent}" style="max-width: 300px; max-height: 300p;" />
 </c:if>
 
 <%@include file="/WEB-INF/jsp/bottom.jsp" %>

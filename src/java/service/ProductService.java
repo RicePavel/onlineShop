@@ -119,8 +119,6 @@ public class ProductService {
       @Override
       protected void doInTransactionWithoutResult(TransactionStatus ts) {
         try {
-          Transaction transaction = productDao.getCurrentSession().beginTransaction();
-          transaction.begin();
           BigDecimal priceDecimal = ConvertUtils.getBigDecimal(price);
           if (priceDecimal != null) {
             priceDecimal = priceDecimal.setScale(2, RoundingMode.HALF_UP);
@@ -138,7 +136,6 @@ public class ProductService {
           if (!errors.isEmpty()) {
             ts.isRollbackOnly();
           }
-
         } catch (Throwable exc) {
           throw new Error(exc.getMessage());
         }

@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
- 
+ <!--
   <bean id="dataSource"
          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
          p:driverClassName="org.hsqldb.jdbcDriver"
@@ -19,8 +19,8 @@
          p:username="SA"
          p:password=""
   />
+  -->
   
-  <!--
 <bean id="dataSource"
      class="org.springframework.jdbc.datasource.DriverManagerDataSource"
      p:driverClassName="org.apache.derby.jdbc.ClientDriver"
@@ -28,7 +28,6 @@
      p:username="shop"
      p:password="qwerty"
   />
-  -->
         
   <!-- Настраивает управление транзакциями с помощью аннотации @Transactional -->
   <tx:annotation-driven transaction-manager="transactionManager" /> 
@@ -46,6 +45,7 @@
     <property name="transactionManager" ref="transactionManager" />
   </bean>
     
+    <!--
   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
     <property name="dataSource" ref="dataSource" />
     <property name="packagesToScan" value="entity" />
@@ -57,8 +57,8 @@
       </props>
     </property>
   </bean>
+  -->
  
-  <!--   
   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
     <property name="dataSource" ref="dataSource" />
     <property name="packagesToScan" value="entity" />
@@ -70,7 +70,6 @@
       </props>
     </property>
   </bean>
-  -->
   
   <import resource="security.xml" />
 
