@@ -45,15 +45,34 @@ public class ProductController extends WebController  {
   }
   
   @RequestMapping("/search")
-  public String search(Map<String, Object> model, @RequestParam("categoryId") Long categoryId) throws IOException {
+  public String search(Map<String, Object> model, @RequestParam("categoryId") Long categoryId,
+         @RequestParam(value = "page", required = false) String pageString) throws IOException {
     Category category = categoryService.find(categoryId);
+    
+    int page = getPage(pageString);
+    int numberOnOnePage = 5;
+    int start = (page -1) * numberOnOnePage;
+    int count = productService.getCountByCategory(categoryId);
+    int countPages = (int) Math.ceil((double) count / (double) numberOnOnePage);
+    
+    model.put("page", page);
+    model.put("countPages", countPages);
+    
     model.put("category", category);
-    List<Product> list = productService.searchActiveByCategory(categoryId);
+    List<Product> list = productService.searchActiveByCategory(categoryId, start, numberOnOnePage);
     for (Product product: list) {
       product.setImgContent(fileService.getImgContent(product));
     }
     model.put("list", list);
     return "product_search";
+  }
+  
+  private int getPage(String page) {
+    try {
+      return Integer.valueOf(page);
+    } catch (Exception e) {
+      return 1;
+    }
   }
   
   @RequestMapping("/add")
@@ -69,6 +88,11 @@ public class ProductController extends WebController  {
       List<String> errors = new ArrayList();
       productService.add(name, description, price, categoryId, file, errors);
       ra.addFlashAttribute("errors", errors);
+      if (!errors.isEmpty()) {
+        ra.addAttribute("name", name);
+        ra.addAttribute("description", description);
+        ra.addAttribute("price", price);
+      }
     }
     return "redirect:/product/search?categoryId=" + categoryId;
   }

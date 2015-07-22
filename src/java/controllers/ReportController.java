@@ -7,6 +7,8 @@ package controllers;
 
 import datastructure.ReportData;
 import entity.Category;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ import service.OrderService;
 import support.ConvertUtils;
 import support.DateFormatUtils;
 import support.DateUtils;
+import support.NumberFormatUtils;
 
 /**
  *
@@ -90,8 +93,10 @@ public class ReportController extends WebController {
     int n = 0;
     for (Object[] arr: list) {
       Category category = (Category) arr[0];
-      double totalSumm = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
-      jsonStr += "['" + category.getName() + "', " + totalSumm + "]";
+      BigDecimal totalSumm = (arr[1] != null ? new BigDecimal(arr[1].toString()) : new BigDecimal(0));
+      totalSumm = totalSumm.setScale(2, RoundingMode.HALF_UP);
+      String summString = NumberFormatUtils.many(totalSumm);
+      jsonStr += "['" + category.getName() + "', " + summString + "]";
       if (n != arr.length) {
         jsonStr += ",";
       }

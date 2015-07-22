@@ -9,6 +9,7 @@ import entity.Category;
 import entity.Product;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -25,13 +26,36 @@ public class ProductDao extends Dao<Product> {
   }
 
   public List<Product> searchActiveByCategory(Long categoryId) {
+    return searchActiveByCategory(categoryId, null, null);
+  } 
+  
+  public List<Product> searchActiveByCategory(Long categoryId, Integer start, Integer count) {
     Criteria crit = currentSession().createCriteria(getSupportedClass());
-    crit.setResultTransformer(crit.DISTINCT_ROOT_ENTITY);
+    crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
     crit.createAlias("category", "category");
     crit.add(Restrictions.eq("category.categoryId", categoryId));
     crit.add(Restrictions.isNull("category.closeDate"));
     crit.add(Restrictions.isNull("closeDate"));
+    if (start != null && count != null) {
+      crit.setFirstResult(start);
+      crit.setMaxResults(count);
+    }
     return crit.list();
+  }
+  
+  public Integer getCountByCategory(Long categoryId) {
+    Criteria crit = currentSession().createCriteria(getSupportedClass());
+    crit.setProjection(Projections.rowCount());
+    crit.createAlias("category", "category");
+    crit.add(Restrictions.eq("category.categoryId", categoryId));
+    crit.add(Restrictions.isNull("category.closeDate"));
+    crit.add(Restrictions.isNull("closeDate"));
+    Long l = (Long) crit.uniqueResult();
+    if (l != null) {
+      return l.intValue();
+    } else {
+      return 0;
+    }
   }
 
   public List<Product> searchByCategory(Long categoryId) {

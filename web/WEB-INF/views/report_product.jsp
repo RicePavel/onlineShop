@@ -30,13 +30,13 @@
     <tr>
       <td>${product.name}</td>
       <td>${arr[2]}</td>
-      <td>${arr[1]}</td>
+      <td><fmt:formatNumber value="${arr[1]}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" /> р. </td>
     </tr>
   </c:forEach>
   <tr>
     <td>Итого</td>
     <td>${totalCount}</td>
-    <td>${totalSumm}</td>
+    <td><fmt:formatNumber value="${totalSumm}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" /> р. </td>
   </tr>
 </table>
 

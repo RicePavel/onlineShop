@@ -16,7 +16,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Название:</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="name" value="${product.name}" />
+        <input class="form-control" type="text" name="name" value="${product.name}" required />
       </div>
     </div>
 
@@ -30,7 +30,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Цена:</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="price" value="${product.price}" />
+        <input class="form-control" type="text" name="price" value="<fmt:formatNumber value="${product.price}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />" pattern="[0-9\s\.\,]+" title="Введите число" />
       </div>
     </div>
 

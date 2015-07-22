@@ -17,7 +17,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Название:</label> 
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="name" value="${param['name']}" /> 
+        <input class="form-control" type="text" name="name" value="${param['name']}" required /> 
       </div>
     </div>
 
@@ -31,7 +31,7 @@
     <div class="form-group">
       <label  class="col-sm-2 control-label">Цена:</label>  
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="price" value="${param['price']}" />
+        <input class="form-control" type="text" name="price" value="${param['price']}" pattern="[0-9\s\.\,]+" required title="Введите число" />
       </div>
     </div>
 
@@ -70,7 +70,7 @@
     </div>
     <div class="order-right-part">
       <div class="order-price">
-        ${product.price}
+        <fmt:formatNumber value="${product.price}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />&nbsp;р.
       </div>
       <div class="order-button">
         <security:authorize url="/cart/addProduct" >
@@ -88,5 +88,21 @@
   <div style="clear:both;"> </div>
 </c:forEach>
 
+  <c:if test="${countPages != null && countPages > 1}">
+    <div id="paginator" class="paginator"> </div>
+  </c:if>
+  
+  <c:url value="/product/search?categoryId=${param['categoryId']}" var="urlForPaginator" />
+  
+  <script type="text/javascript">
+  paginator_example = new Paginator(
+          "paginator", // id контейнера, куда ляжет пагинатор
+  ${countPages}, // общее число страниц
+          3, // число страниц, видимых одновременно
+  ${page}, // номер текущей страницы
+          '${urlForPaginator}' // url страниц
+          );
+</script>
+  
 <%@include file="/WEB-INF/jsp/bottom.jsp" %>
 

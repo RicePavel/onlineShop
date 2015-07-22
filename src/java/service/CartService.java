@@ -9,6 +9,7 @@ import dao.ProductDao;
 import entity.Product;
 import entity.cart.CartInfo;
 import entity.cart.CartInfoItem;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -35,14 +36,14 @@ public class CartService {
     Map<Long, Integer> cart = getCart(session);
     List<CartInfoItem> infoList = new ArrayList();
     int totalQuantity = 0;
-    double totalSumm = 0;
+    BigDecimal totalSumm = new BigDecimal(0);
     for (Long productId : cart.keySet()) {
       Integer quantity = cart.get(productId);
       Product prod = productDao.find(productId);
-      double summ = prod.getPrice() * ((double) quantity);
+      BigDecimal summ = prod.getPrice().multiply(new BigDecimal(quantity));
       infoList.add(new CartInfoItem(prod, quantity, summ));
       totalQuantity += quantity;
-      totalSumm += summ;
+      totalSumm = totalSumm.add(summ);
     }
     return new CartInfo(totalQuantity, totalSumm, infoList);
   }

@@ -5,6 +5,7 @@
  */
 package datastructure;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,6 @@ public class ReportData {
   
   public int totalCount = 0;
   
-  public double totalSumm = 0;
+  public BigDecimal totalSumm = new BigDecimal(0);
   
 }

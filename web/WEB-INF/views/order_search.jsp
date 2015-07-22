@@ -25,13 +25,13 @@
       <td>${item.product.name}</td>
       <td>${item.price}</td>
       <td>${item.quantity}</td>
-      <td>${item.summPrice}</td>
+      <td>${item.summPrice} р.</td>
     </tr>
   </c:forEach>
     <tr>
       <td colspan="2">Итого</td>
       <td>${order.totalQuantity}</td>
-      <td>${order.totalSummPrice}</td>
+      <td>${order.totalSummPrice} р.</td>
     </tr>
   </table>
 </c:forEach>

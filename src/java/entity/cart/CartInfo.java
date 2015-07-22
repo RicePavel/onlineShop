@@ -5,6 +5,7 @@
  */
 package entity.cart;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -15,11 +16,11 @@ public class CartInfo {
   
     public final int count;
   
-  public final double summ;
+  public final BigDecimal summ;
   
   public final List<CartInfoItem> items;
   
-  public CartInfo(int count, double summ, List<CartInfoItem> items) {
+  public CartInfo(int count, BigDecimal summ, List<CartInfoItem> items) {
     this.count = count;
     this.summ = summ;
     this.items = items;
@@ -29,7 +30,7 @@ public class CartInfo {
     return count;
   }
 
-  public double getSumm() {
+  public BigDecimal getSumm() {
     return summ;
   }
 

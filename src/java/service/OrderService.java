@@ -14,6 +14,7 @@ import entity.Category;
 import entity.Order;
 import entity.OrderItem;
 import entity.Product;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -52,15 +53,15 @@ public class OrderService {
   public ReportData reportByCategories(Date dateFrom, Date dateTo) {
     List<Object[]> list = orderDao.reportByCategories(dateFrom, dateTo);
     int totalCount = 0;
-    double totalSumm = 0;
+    BigDecimal totalSumm = new BigDecimal(0);
     for (Object[] arr: list) {
       Long categoryId = Long.valueOf(arr[0].toString());
       Category category = categoryDao.find(categoryId);
       arr[0] = category;
-      double summ = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
-      double count = (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
+      BigDecimal summ = (arr[1] != null ? new BigDecimal(arr[1].toString()) : new BigDecimal(0));
+      int count = (int) (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
       totalCount += count;
-      totalSumm += summ; 
+      totalSumm = totalSumm.add(summ); 
     }
     ReportData data = new ReportData();
     data.list = list;
@@ -72,15 +73,15 @@ public class OrderService {
   public ReportData reportByProducts(Long categoryId, Date dateFrom, Date dateTo) {
     List<Object[]> list = orderDao.reportByProducts(categoryId, dateFrom, dateTo);
     int totalCount = 0;
-    double totalSumm = 0;
+    BigDecimal totalSumm = new BigDecimal(0);
     for (Object[] arr: list) {
       Long productId = Long.valueOf(arr[0].toString());
       Product product = productDao.find(productId);
       arr[0] = product;
-      double summ = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
-      double count = (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
+      BigDecimal summ = (arr[1] != null ? new BigDecimal(arr[1].toString()) : new BigDecimal(0));
+      int count = (int) (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
       totalCount += count;
-      totalSumm += summ; 
+      totalSumm = totalSumm.add(summ); 
     }
     ReportData data = new ReportData();
     data.list = list;
@@ -92,12 +93,12 @@ public class OrderService {
   public ReportData reportByClients(Date dateFrom, Date dateTo) {
     List<Object[]> list = orderDao.reportByClients(dateFrom, dateTo);
     int totalCount = 0;
-    double totalSumm = 0;
+    BigDecimal totalSumm = new BigDecimal(0);
     for (Object[] arr: list) {
-      double summ = (arr[1] != null ? Double.valueOf(arr[1].toString()) : 0);
-      double count = (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
+      BigDecimal summ = (arr[1] != null ? new BigDecimal(arr[1].toString()) : new BigDecimal(0));
+      int count = (int) (arr[2] != null ? Double.valueOf(arr[2].toString()) : 0);
       totalCount += count;
-      totalSumm += summ; 
+      totalSumm = totalSumm.add(summ); 
     }
     ReportData data = new ReportData();
     data.list = list;
@@ -135,7 +136,7 @@ public class OrderService {
         OrderItem item = new OrderItem();
         item.setOrder(order);
         Product product = productDao.find(productId);
-        Double price = product.getPrice();
+        BigDecimal price = product.getPrice();
         item.setPrice(price);
         item.setProduct(product);
         item.setQuantity(quantity);

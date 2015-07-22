@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.CartService;
 import service.OrderService;
+import support.NumberFormatUtils;
 
 /**
  *
@@ -80,7 +81,7 @@ public class CartController extends WebController {
     Map<String, Object> result = new HashMap();
     CartInfo cartInfo = cartService.getCartInfo(session);
     result.put("count", cartInfo.count);
-    result.put("summ", cartInfo.summ);
+    result.put("summ", NumberFormatUtils.many(cartInfo.summ));
     return result;
   }
   

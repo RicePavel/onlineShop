@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +44,7 @@ public class Product {
 
   @NotNull(message = "не передан параметр - цена")
   @Column(name = "price")
-  private Double price;
+  private BigDecimal price;
 
   @NotNull(message = "не передан параметр - категория")
   @ManyToOne
@@ -83,11 +84,11 @@ public class Product {
     this.description = description;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(Double price) {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 

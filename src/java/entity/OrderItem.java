@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
@@ -34,7 +35,7 @@ public class OrderItem {
   private Integer quantity;
   
   @Column(name = "price")
-  private Double price;
+  private BigDecimal price;
   
   @ManyToOne
   @JoinColumn(name = "order_id")
@@ -64,11 +65,11 @@ public class OrderItem {
     this.quantity = quantity;
   }
 
-  public Double getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(Double price) {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 
@@ -80,8 +81,8 @@ public class OrderItem {
     this.order = order;
   }
   
-  public double getSummPrice() {
-    return price*quantity;
+  public BigDecimal getSummPrice() {
+    return price.multiply(new BigDecimal(quantity));
   }
   
 }

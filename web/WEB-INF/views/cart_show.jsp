@@ -26,7 +26,7 @@
         ${item.product.name}
       </td>
       <td>
-        ${item.product.price}
+        <fmt:formatNumber value="${item.product.price}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />
       </td>
       <td>
         <a type="button" class="btn btn-default" href="<c:url value="/cart/minus?productId=${item.product.productId}" />" >-</a>
@@ -34,7 +34,7 @@
         <a type="button" class="btn btn-default" href="<c:url value="/cart/plus?productId=${item.product.productId}" />" >+</a>
       </td>
       <td>
-        ${item.summ}
+        <fmt:formatNumber value="${item.summ}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />
       </td>
       <td>
         <a href="<c:url value="/cart/delete?productId=${item.product.productId}" />" >Удалить</a>
@@ -43,7 +43,9 @@
   </c:forEach>
   <tr>
     <td colspan="3">Итого</td>
-    <td>${cartInfo.summ}</td>
+    <td>
+      <fmt:formatNumber value="${cartInfo.summ}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" />
+    </td>
     <td></td>
   </tr>
 </table>
@@ -54,21 +56,21 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Email:</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="email" value="${param['email']}" />
+        <input class="form-control" type="email" name="email" value="${param['email']}" required />
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">ФИО:</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="fio" value="${param['fio']}" />
+        <input class="form-control" type="text" name="fio" value="${param['fio']}" required />
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-2 control-label">Адрес: </label>
       <div class="col-sm-10">
-        <input class="form-control" type="address" name="address" value="${param['address']}" />
+        <input class="form-control" type="address" name="address" value="${param['address']}" required />
       </div>
     </div>
 

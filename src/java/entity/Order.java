@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -38,6 +39,7 @@ public class Order {
   @Column(name = "fio")
   private String fio;
 
+  @Email(message = "Email - значение должно представлять собой email-адрес")
   @NotEmpty(message = "Email - значение должно быть задано")
   @Column(name = "email")
   private String email;
@@ -90,18 +92,18 @@ public class Order {
     this.email = email;
   }
 
-  public double getTotalSummPrice() {
+  public BigDecimal getTotalSummPrice() {
     List<OrderItem> list = getOrderItemList();
-    double price = 0;
+    BigDecimal price = new BigDecimal("0");
     for (OrderItem item : list) {
-      price += item.getSummPrice();
+      price = price.add(item.getSummPrice());
     }
     return price;
   }
 
-  public double getTotalQuantity() {
+  public int getTotalQuantity() {
     List<OrderItem> list = getOrderItemList();
-    double quantity = 0;
+    int quantity = 0;
     for (OrderItem item : list) {
       quantity += item.getQuantity();
     }

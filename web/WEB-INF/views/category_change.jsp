@@ -16,7 +16,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Название:</label>
       <div class="col-sm-10">
-        <input class="form-control" type="text" name="name" value="${category.name}" />
+        <input class="form-control" type="text" name="name" value="${category.name}" required />
       </div>
     </div>
     <input type="hidden" name="categoryId" value="${category.categoryId}" />
