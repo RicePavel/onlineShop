@@ -16,6 +16,6 @@
     Моя корзина: <br/>
     Товаров: <span id="cartInfoCount">${cartInfo.count}</span> <br/>
     Сумма: <span id="cartInfoSumm">${cartInfo.summ}</span> р. <br/>
-    <a type="button" class="btn btn-success" href="<c:url value="/cart/show" />">Оформить заказ</a>
+    <a type="button" class="btn btn-success" href="<c:url value="/cart/show" />">Перейти в корзину</a>
   </div>
 </security:authorize>
