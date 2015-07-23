@@ -20,8 +20,9 @@
     <th> Сумма </th>
   </tr>
   <c:forEach items="${list}" var="arr">
+    <c:set var="email" value="${arr[0]}" />
     <tr>
-      <td>${arr[0]}</td>
+      <td>  <a href="<c:url value="/order/search?email=${email}" />">${email}</a> </td>
       <td>${arr[2]}</td>
       <td><fmt:formatNumber value="${arr[1]}" pattern="###.##" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="1" /> р.</td>
     </tr>

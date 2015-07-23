@@ -119,8 +119,8 @@ public class OrderService {
     }
   }
   
-  public List<Order> search() {
-    return orderDao.getAll();
+  public List<Order> search(String email) {
+    return orderDao.getAll(email);
   }
 
   private void makeOrder(String fio, String address, String email, Map<Long, Integer> cart, List<String> errors) {

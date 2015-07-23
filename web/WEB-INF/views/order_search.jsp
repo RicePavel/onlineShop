@@ -10,7 +10,12 @@
 
 <%@include file="/WEB-INF/jsp/errors.jsp" %>
 
-<h2>Заказы, сделанные клиентами</h2>
+<c:if test="${email != null && ! empty email}" >
+  <h2>Заказы по клиенту ${email}</h2>
+</c:if>
+<c:if test="${email == null || empty email}" >
+  <h2>Заказы, сделанные клиентами</h2>
+</c:if>
 
 <c:forEach items="${list}" var="order" > 
   <h3> ${order.fio} ${order.email} ${order.address} <fmt:formatDate value="${order.createDate}" pattern="dd.MM.yyyy HH:mm" /> </h3>
@@ -21,14 +26,14 @@
       <td>Количество</td>
       <td>Сумма</td>
     </tr>
-  <c:forEach items="${order.orderItemList}" var="item">
-    <tr>
-      <td>${item.product.name}</td>
-      <td>${item.price}</td>
-      <td>${item.quantity}</td>
-      <td>${item.summPrice} р.</td>
-    </tr>
-  </c:forEach>
+    <c:forEach items="${order.orderItemList}" var="item">
+      <tr>
+        <td>${item.product.name}</td>
+        <td>${item.price}</td>
+        <td>${item.quantity}</td>
+        <td>${item.summPrice} р.</td>
+      </tr>
+    </c:forEach>
     <tr>
       <td colspan="2">Итого</td>
       <td>${order.totalQuantity}</td>

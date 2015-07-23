@@ -8,7 +8,9 @@ package dao;
 import entity.Order;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,6 +23,14 @@ public class OrderDao extends Dao<Order> {
   @Override
   public Class getSupportedClass() {
     return Order.class;
+  }
+  
+  public List<Order> getAll(String email) {
+    Criteria crit = getCriteriaDistinctRootEntity(getSupportedClass());
+    if (email != null && !email.isEmpty()) {
+      crit.add(Restrictions.eq("email", email));
+    }
+    return crit.list();
   }
   
   public List<Object[]> reportByCategories(Date dateFrom, Date dateTo) {
